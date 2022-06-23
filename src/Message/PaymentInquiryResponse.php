@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\PaymentInquiryResponseModel;
+use Omnipay\Iyzico\Models\PaymentInquiryResponseModel;
 
 class PaymentInquiryResponse extends RemoteAbstractResponse
 {
 	/**
-	 * @throws \Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException
+	 * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
 	 * @throws \JsonException
 	 */
 	public function __construct(RequestInterface $request, $data)

@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\PaymentInquiryRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\PaymentInquiryRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class PaymentInquiryRequest extends RemoteAbstractRequest
 {
@@ -68,7 +68,7 @@ class PaymentInquiryRequest extends RemoteAbstractRequest
 	}
 
 	/**
-	 * @throws OmnipayIparaHashValidationException
+	 * @throws OmnipayIyzicoHashValidationException
 	 */
 	protected function createResponse($data): PaymentInquiryResponse
 	{
@@ -79,7 +79,7 @@ class PaymentInquiryRequest extends RemoteAbstractRequest
 	 * @param array{request_params: PaymentInquiryRequestModel, headers: RequestHeadersModel} $data
 	 *
 	 * @return PaymentInquiryResponse
-	 * @throws OmnipayIparaHashValidationException
+	 * @throws OmnipayIyzicoHashValidationException
 	 */
 	public function sendData($data): PaymentInquiryResponse
 	{

@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Models;
+namespace Omnipay\Iyzico\Models;
 
 class LinkPaymentRecordModel extends BaseModel
 {

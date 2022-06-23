@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Constants;
+namespace Omnipay\Iyzico\Constants;
 
 use ReflectionClass;
 

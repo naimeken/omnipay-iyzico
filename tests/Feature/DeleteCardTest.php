@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\DeleteCardRequest;
-use Omnipay\Ipara\Message\DeleteCardResponse;
-use Omnipay\Ipara\Models\DeleteCardRequestModel;
-use Omnipay\Ipara\Models\DeleteCardResponseModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\DeleteCardRequest;
+use Omnipay\Iyzico\Message\DeleteCardResponse;
+use Omnipay\Iyzico\Models\DeleteCardRequestModel;
+use Omnipay\Iyzico\Models\DeleteCardResponseModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class DeleteCardTest extends TestCase
 {

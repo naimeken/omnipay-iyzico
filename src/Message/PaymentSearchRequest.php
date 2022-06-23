@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\PaymentSearchRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\PaymentSearchRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class PaymentSearchRequest extends RemoteAbstractRequest
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\LoginRequest;
-use Omnipay\Ipara\Message\LoginResponse;
-use Omnipay\Ipara\Models\LoginRequestModel;
-use Omnipay\Ipara\Models\LoginResponseModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\LoginRequest;
+use Omnipay\Iyzico\Message\LoginResponse;
+use Omnipay\Iyzico\Models\LoginRequestModel;
+use Omnipay\Iyzico\Models\LoginResponseModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class LoginTest extends TestCase
 {

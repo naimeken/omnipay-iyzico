@@ -1,9 +1,9 @@
 <?php
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\DeleteLinkResponseModel;
+use Omnipay\Iyzico\Models\DeleteLinkResponseModel;
 use Psr\Http\Message\ResponseInterface;
 
 class DeleteLinkResponse extends AbstractResponse

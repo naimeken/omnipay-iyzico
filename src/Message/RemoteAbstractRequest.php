@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Ipara\Traits\PurchaseGettersSetters;
+use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 
 /**
- * Ipara Purchase Request
+ * Iyzico Purchase Request
  */
 abstract class RemoteAbstractRequest extends AbstractRequest
 {

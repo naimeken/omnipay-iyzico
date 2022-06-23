@@ -1,22 +1,22 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
-use Omnipay\Ipara\Message\BinLookupRequest;
-use Omnipay\Ipara\Message\BinLookupResponse;
-use Omnipay\Ipara\Message\ChargeRequest;
-use Omnipay\Ipara\Message\ChargeResponse;
-use Omnipay\Ipara\Models\AddressModel;
-use Omnipay\Ipara\Models\BinLookupRequestModel;
-use Omnipay\Ipara\Models\BinLookupResponseModel;
-use Omnipay\Ipara\Models\ChargeRequestModel;
-use Omnipay\Ipara\Models\InvoiceAddressModel;
-use Omnipay\Ipara\Models\ProductModel;
-use Omnipay\Ipara\Models\PurchaserModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Models\ResponseModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\BinLookupRequest;
+use Omnipay\Iyzico\Message\BinLookupResponse;
+use Omnipay\Iyzico\Message\ChargeRequest;
+use Omnipay\Iyzico\Message\ChargeResponse;
+use Omnipay\Iyzico\Models\AddressModel;
+use Omnipay\Iyzico\Models\BinLookupRequestModel;
+use Omnipay\Iyzico\Models\BinLookupResponseModel;
+use Omnipay\Iyzico\Models\ChargeRequestModel;
+use Omnipay\Iyzico\Models\InvoiceAddressModel;
+use Omnipay\Iyzico\Models\ProductModel;
+use Omnipay\Iyzico\Models\PurchaserModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Models\ResponseModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class BinLookupTest extends TestCase
 {

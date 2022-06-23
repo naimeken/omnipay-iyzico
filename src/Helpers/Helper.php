@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Helpers;
+namespace Omnipay\Iyzico\Helpers;
 
 class Helper
 {

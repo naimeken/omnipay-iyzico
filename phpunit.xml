@@ -19,7 +19,7 @@
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="Omnipay Ipara Test Suite">
+        <testsuite name="Omnipay Iyzico Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

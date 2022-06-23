@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Models;
+namespace Omnipay\Iyzico\Models;
 
 /**
  * iPara, güvenlik kontrolleri için, mağazadan bazı bilgileri HTTP Header alanında istemektedir.

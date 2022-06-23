@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\DeleteCardRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\DeleteCardRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class DeleteCardRequest extends RemoteAbstractRequest
 {
@@ -72,7 +72,7 @@ class DeleteCardRequest extends RemoteAbstractRequest
 	}
 
 	/**
-	 * @throws \Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException
+	 * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
 	 */
 	public function sendData($data)
 	{

@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\LoginRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\LoginRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class LoginRequest extends RemoteAbstractRequest
 {

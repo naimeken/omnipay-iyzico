@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\CaptureRequest;
-use Omnipay\Ipara\Message\CaptureResponse;
-use Omnipay\Ipara\Models\CaptureRequestModel;
-use Omnipay\Ipara\Models\CaptureResponseModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\CaptureRequest;
+use Omnipay\Iyzico\Message\CaptureResponse;
+use Omnipay\Iyzico\Models\CaptureRequestModel;
+use Omnipay\Iyzico\Models\CaptureResponseModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class CaptureTest extends TestCase
 {

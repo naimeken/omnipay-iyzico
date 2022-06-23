@@ -1,16 +1,16 @@
 <?php
 
-namespace Omnipay\Ipara;
+namespace Omnipay\Iyzico;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Ipara\Traits\PurchaseGettersSetters;
+use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 
 /**
- * Ipara Gateway
+ * Iyzico Gateway
  * (c) Tolga Can Günel
  * 2015, mobius.studio
- * http://www.github.com/tcgunel/omnipay-ipara
+ * http://www.github.com/tcgunel/omnipay-iyzico
  * @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = [])
  * @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = [])
  */
@@ -20,7 +20,7 @@ class Gateway extends AbstractGateway
 
 	public function getName(): string
 	{
-		return 'Ipara';
+		return 'Iyzico';
 	}
 
 	public function getDefaultParameters()
@@ -53,21 +53,21 @@ class Gateway extends AbstractGateway
 			$this->getSecure() === true
 		) {
 
-			return $this->createRequest('\Omnipay\Ipara\Message\EnrolmentRequest', $parameters);
+			return $this->createRequest('\Omnipay\Iyzico\Message\EnrolmentRequest', $parameters);
 
 		}
 
-		return $this->createRequest('\Omnipay\Ipara\Message\ChargeRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\ChargeRequest', $parameters);
 	}
 
 	public function authorize(array $parameters = [])
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\AuthorizeRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\AuthorizeRequest', $parameters);
 	}
 
 	public function capture(array $parameters = [])
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\CaptureRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\CaptureRequest', $parameters);
 	}
 
 	/**
@@ -75,60 +75,60 @@ class Gateway extends AbstractGateway
 	 *
 	 * @return AbstractRequest|\Omnipay\Common\Message\RequestInterface
 	 *
-	 * @deprecated No Need to confirm 3d payments with Ipara.
+	 * @deprecated No Need to confirm 3d payments with Iyzico.
 	 */
 	public function completePurchase(array $parameters = array())
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\VerifyEnrolmentRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\VerifyEnrolmentRequest', $parameters);
 	}
 
 	public function createCard(array $parameters = array())
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\CreateCardRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\CreateCardRequest', $parameters);
 	}
 
 	public function deleteCard(array $parameters = array())
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\DeleteCardRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\DeleteCardRequest', $parameters);
 	}
 
 	public function listCard(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\CardInquiryRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\CardInquiryRequest', $parameters);
 	}
 
 	public function binLookup(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\BinLookupRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\BinLookupRequest', $parameters);
 	}
 
 	public function paymentInquiry(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\PaymentInquiryRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\PaymentInquiryRequest', $parameters);
 	}
 
 	public function paymentSearch(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\PaymentSearchRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\PaymentSearchRequest', $parameters);
 	}
 
 	public function login(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\LoginRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\LoginRequest', $parameters);
 	}
 
 	public function createLink(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\CreateLinkRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\CreateLinkRequest', $parameters);
 	}
 
 	public function listLink(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\ListLinkRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\ListLinkRequest', $parameters);
 	}
 
 	public function deleteLink(array $parameters = array()): AbstractRequest
 	{
-		return $this->createRequest('\Omnipay\Ipara\Message\DeleteLinkRequest', $parameters);
+		return $this->createRequest('\Omnipay\Iyzico\Message\DeleteLinkRequest', $parameters);
 	}
 }

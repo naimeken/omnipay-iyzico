@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\Ipara\Tests;
+namespace Omnipay\Iyzico\Tests;
 
 use Faker\Factory;
-use Omnipay\Ipara\Gateway;
+use Omnipay\Iyzico\Gateway;
 use Omnipay\Tests\GatewayTestCase;
 
 class TestCase extends GatewayTestCase

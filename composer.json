@@ -1,9 +1,9 @@
 {
-    "name": "tcgunel/omnipay-ipara",
+    "name": "tcgunel/omnipay-iyzico",
     "type": "library",
-    "description": "Omnipay extension for iPara",
+    "description": "Omnipay extension for Iyzico",
     "keywords": [
-        "ipara",
+        "iyzico",
         "omnipay",
         "payment",
         "gateway",
@@ -18,7 +18,7 @@
         "otorizasyon kapama",
         "login servisi"
     ],
-    "homepage": "https://github.com/tcgunel/omnipay-ipara",
+    "homepage": "https://github.com/tcgunel/omnipay-iyzico",
     "license": "MIT",
     "authors": [
         {
@@ -27,17 +27,17 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/tcgunel/omnipay-ipara/contributors"
+            "homepage": "https://github.com/tcgunel/omnipay-iyzico/contributors"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Omnipay\\Ipara\\": "src/"
+            "Omnipay\\Iyzico\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Omnipay\\Ipara\\Tests\\": "tests"
+            "Omnipay\\Iyzico\\Tests\\": "tests"
         }
     },
     "require": {

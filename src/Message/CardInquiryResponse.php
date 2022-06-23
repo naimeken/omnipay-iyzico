@@ -4,12 +4,12 @@
  * Date: 04/08/15
  */
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use JsonException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\CardInquiryResponseModel;
+use Omnipay\Iyzico\Models\CardInquiryResponseModel;
 use Psr\Http\Message\ResponseInterface;
 
 class CardInquiryResponse extends AbstractResponse

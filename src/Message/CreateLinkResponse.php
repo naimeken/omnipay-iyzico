@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use JsonException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\CreateLinkResponseModel;
+use Omnipay\Iyzico\Models\CreateLinkResponseModel;
 use Psr\Http\Message\ResponseInterface;
 
 class CreateLinkResponse extends AbstractResponse

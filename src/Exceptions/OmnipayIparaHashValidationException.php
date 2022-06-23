@@ -1,7 +1,7 @@
 <?php
 
-namespace Omnipay\Ipara\Exceptions;
+namespace Omnipay\Iyzico\Exceptions;
 
-class OmnipayIparaHashValidationException extends \Exception{
+class OmnipayIyzicoHashValidationException extends \Exception{
 
 }

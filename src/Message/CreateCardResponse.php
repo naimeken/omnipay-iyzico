@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use JsonException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\CreateCardResponseModel;
+use Omnipay\Iyzico\Models\CreateCardResponseModel;
 use Psr\Http\Message\ResponseInterface;
 
 class CreateCardResponse extends AbstractResponse

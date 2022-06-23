@@ -1,21 +1,21 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\ChargeRequestModel;
-use Omnipay\Ipara\Models\EnrolmentRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Models\ResponseModel;
-use Omnipay\Ipara\Traits\PurchaseGettersSetters;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\ChargeRequestModel;
+use Omnipay\Iyzico\Models\EnrolmentRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Models\ResponseModel;
+use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 
 /**
- * Ipara Complete Auth Request
+ * Iyzico Complete Auth Request
  *
- * @deprecated No need to confirm 3d payments with Ipara.
+ * @deprecated No need to confirm 3d payments with Iyzico.
  */
 class VerifyEnrolmentRequest extends ChargeRequest
 {

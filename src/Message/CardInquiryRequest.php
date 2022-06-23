@@ -4,13 +4,13 @@
  * Date: 04/08/15
  */
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\CardInquiryRequestModel;
-use Omnipay\Ipara\Models\CreateCardRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\CardInquiryRequestModel;
+use Omnipay\Iyzico\Models\CreateCardRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class CardInquiryRequest extends RemoteAbstractRequest
 {

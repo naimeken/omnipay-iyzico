@@ -1,15 +1,15 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException;
-use Omnipay\Ipara\Helpers\Helper;
+use Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException;
+use Omnipay\Iyzico\Helpers\Helper;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Ipara Abstract Response
+ * Iyzico Abstract Response
  */
 abstract class RemoteAbstractResponse extends AbstractResponse
 {
@@ -18,7 +18,7 @@ abstract class RemoteAbstractResponse extends AbstractResponse
 	protected $request;
 
 	/**
-	 * @throws OmnipayIparaHashValidationException
+	 * @throws OmnipayIyzicoHashValidationException
 	 */
 	public function __construct(RequestInterface $request, $data)
 	{
@@ -44,7 +44,7 @@ abstract class RemoteAbstractResponse extends AbstractResponse
 
 			if (!$this->validateHash()) {
 
-				throw new OmnipayIparaHashValidationException(
+				throw new OmnipayIyzicoHashValidationException(
 					"Hash validation after request failed ! Might be a security issue."
 				);
 

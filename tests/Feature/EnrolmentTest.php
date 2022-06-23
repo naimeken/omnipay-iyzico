@@ -1,17 +1,17 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
-use Omnipay\Ipara\Message\EnrolmentRequest;
-use Omnipay\Ipara\Message\EnrolmentResponse;
-use Omnipay\Ipara\Models\AddressModel;
-use Omnipay\Ipara\Models\EnrolmentRequestModel;
-use Omnipay\Ipara\Models\InvoiceAddressModel;
-use Omnipay\Ipara\Models\ProductModel;
-use Omnipay\Ipara\Models\PurchaserModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\EnrolmentRequest;
+use Omnipay\Iyzico\Message\EnrolmentResponse;
+use Omnipay\Iyzico\Models\AddressModel;
+use Omnipay\Iyzico\Models\EnrolmentRequestModel;
+use Omnipay\Iyzico\Models\InvoiceAddressModel;
+use Omnipay\Iyzico\Models\ProductModel;
+use Omnipay\Iyzico\Models\PurchaserModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class EnrolmentTest extends TestCase
 {

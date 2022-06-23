@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use JsonException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\PaymentSearchResponseModel;
+use Omnipay\Iyzico\Models\PaymentSearchResponseModel;
 use Psr\Http\Message\ResponseInterface;
 
 class PaymentSearchResponse extends AbstractResponse

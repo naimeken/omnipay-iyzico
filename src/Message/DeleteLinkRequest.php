@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\DeleteLinkRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\DeleteLinkRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class DeleteLinkRequest extends RemoteAbstractRequest
 {

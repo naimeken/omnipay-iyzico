@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Models;
+namespace Omnipay\Iyzico\Models;
 
 /**
  * Parameter descriptions directly taken from official documentation.

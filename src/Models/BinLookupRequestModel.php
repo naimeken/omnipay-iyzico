@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Models;
+namespace Omnipay\Iyzico\Models;
 
 /**
  * @link https://dev.ipara.com.tr/Home/PaymentServices#binInqury

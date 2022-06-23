@@ -1,19 +1,19 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\CardInquiryRequest;
-use Omnipay\Ipara\Message\CardInquiryResponse;
-use Omnipay\Ipara\Message\CreateCardRequest;
-use Omnipay\Ipara\Message\CreateCardResponse;
-use Omnipay\Ipara\Models\CardInquiryRequestModel;
-use Omnipay\Ipara\Models\CardInquiryResponseModel;
-use Omnipay\Ipara\Models\CardModel;
-use Omnipay\Ipara\Models\CreateCardRequestModel;
-use Omnipay\Ipara\Models\CreateCardResponseModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\CardInquiryRequest;
+use Omnipay\Iyzico\Message\CardInquiryResponse;
+use Omnipay\Iyzico\Message\CreateCardRequest;
+use Omnipay\Iyzico\Message\CreateCardResponse;
+use Omnipay\Iyzico\Models\CardInquiryRequestModel;
+use Omnipay\Iyzico\Models\CardInquiryResponseModel;
+use Omnipay\Iyzico\Models\CardModel;
+use Omnipay\Iyzico\Models\CreateCardRequestModel;
+use Omnipay\Iyzico\Models\CreateCardResponseModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class CreateCardTest extends TestCase
 {

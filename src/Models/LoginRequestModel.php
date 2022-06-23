@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Models;
+namespace Omnipay\Iyzico\Models;
 
 /**
  * @link https://documenter.getpostman.com/view/10639199/SzRw3Bnj

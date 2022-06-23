@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\Ipara\Models;
+namespace Omnipay\Iyzico\Models;
 
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Helpers\XmlDomConstruct;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Helpers\XmlDomConstruct;
 
 class BaseModel
 {

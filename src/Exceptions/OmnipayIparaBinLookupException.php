@@ -1,7 +1,7 @@
 <?php
 
-namespace Omnipay\Ipara\Exceptions;
+namespace Omnipay\Iyzico\Exceptions;
 
-class OmnipayIparaBinLookupException extends \Exception{
+class OmnipayIyzicoBinLookupException extends \Exception{
 
 }

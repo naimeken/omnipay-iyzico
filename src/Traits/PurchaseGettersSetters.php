@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Ipara\Traits;
+namespace Omnipay\Iyzico\Traits;
 
 trait PurchaseGettersSetters
 {

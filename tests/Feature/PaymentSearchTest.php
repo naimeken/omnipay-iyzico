@@ -1,17 +1,17 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\PaymentSearchRequest;
-use Omnipay\Ipara\Message\PaymentSearchResponse;
-use Omnipay\Ipara\Models\LinkPaymentRecordModel;
-use Omnipay\Ipara\Models\PaymentModel;
-use Omnipay\Ipara\Models\PaymentSearchRequestModel;
-use Omnipay\Ipara\Models\PaymentSearchResponseModel;
-use Omnipay\Ipara\Models\CardModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\PaymentSearchRequest;
+use Omnipay\Iyzico\Message\PaymentSearchResponse;
+use Omnipay\Iyzico\Models\LinkPaymentRecordModel;
+use Omnipay\Iyzico\Models\PaymentModel;
+use Omnipay\Iyzico\Models\PaymentSearchRequestModel;
+use Omnipay\Iyzico\Models\PaymentSearchResponseModel;
+use Omnipay\Iyzico\Models\CardModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class PaymentSearchTest extends TestCase
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Models\ChargeRequestModel;
-use Omnipay\Ipara\Models\PurchaseRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Models\ChargeRequestModel;
+use Omnipay\Iyzico\Models\PurchaseRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class AuthorizeRequest extends PurchaseRequest
 {
@@ -27,7 +27,7 @@ class AuthorizeRequest extends PurchaseRequest
     }
 
     /**
-     * @throws \Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException
+     * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
      */
     protected function createResponse($data): ChargeResponse
     {
@@ -38,7 +38,7 @@ class AuthorizeRequest extends PurchaseRequest
      * @param array{request_params: ChargeRequestModel, headers: RequestHeadersModel} $data
      *
      * @return ChargeResponse
-     * @throws \Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException
+     * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
      */
     public function sendData($data)
     {

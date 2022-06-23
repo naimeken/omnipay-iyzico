@@ -1,18 +1,18 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Item;
 use Omnipay\Common\Message\ResponseInterface;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\AddressModel;
-use Omnipay\Ipara\Models\EnrolmentRequestModel;
-use Omnipay\Ipara\Models\InvoiceAddressModel;
-use Omnipay\Ipara\Models\ChargeRequestModel;
-use Omnipay\Ipara\Models\ProductModel;
-use Omnipay\Ipara\Models\PurchaserModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Traits\PurchaseGettersSetters;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\AddressModel;
+use Omnipay\Iyzico\Models\EnrolmentRequestModel;
+use Omnipay\Iyzico\Models\InvoiceAddressModel;
+use Omnipay\Iyzico\Models\ChargeRequestModel;
+use Omnipay\Iyzico\Models\ProductModel;
+use Omnipay\Iyzico\Models\PurchaserModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 
 class PurchaseRequest extends RemoteAbstractRequest
 {

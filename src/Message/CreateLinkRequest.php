@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Exception;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Helpers\Helper;
-use Omnipay\Ipara\Models\CreateLinkRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\CreateLinkRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class CreateLinkRequest extends RemoteAbstractRequest
 {

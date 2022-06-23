@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
-use Omnipay\Ipara\Models\EnrolmentRequestModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Models\EnrolmentRequestModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 /**
- * Ipara 3D Secure enrolment request
+ * Iyzico 3D Secure enrolment request
  */
 class EnrolmentRequest extends PurchaseRequest
 {
@@ -34,7 +34,7 @@ class EnrolmentRequest extends PurchaseRequest
     }
 
     /**
-     * @throws \Omnipay\Ipara\Exceptions\OmnipayIparaHashValidationException
+     * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
      */
     public function sendData($data)
     {

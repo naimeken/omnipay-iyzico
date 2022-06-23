@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Ipara\Models\CaptureResponseModel;
+use Omnipay\Iyzico\Models\CaptureResponseModel;
 
 class CaptureResponse extends RemoteAbstractResponse
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\Ipara\Message;
+namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
- * Ipara Enrolment Response
+ * Iyzico Enrolment Response
  *
  * @property EnrolmentRequest $request
  */
@@ -54,7 +54,7 @@ class EnrolmentResponse extends AbstractResponse implements RedirectResponseInte
 		$script = '<script>
 			document.forms[0].style.display = "none";
 	        document.getElementsByTagName("section")[0].style.display = "block";
-	        
+
 			setTimeout(function() {
 			  document.body.style.color = "auto";
 			  document.forms[0].style.display = "block";
@@ -77,7 +77,7 @@ class EnrolmentResponse extends AbstractResponse implements RedirectResponseInte
 					  margin: 0 auto;
 					  padding: 20px;
 					}
-					
+
 					.spinner {
 					  animation: rotate 1.4s linear infinite;
 					  -webkit-animation: rotate 1.4s linear infinite;
@@ -86,33 +86,33 @@ class EnrolmentResponse extends AbstractResponse implements RedirectResponseInte
 					  height:114px;
 					  position: relative;
 					}
-					
+
 					.spinner-dot {
 					  width:214px;
 					  height:214px;
 					  position: relative;
 					  top: 0;
 					}
-					
-					
+
+
 					@keyframes rotate {
 					  to {
 					    transform: rotate(360deg);
 					  }
 					}
-					
+
 					@-webkit-keyframes rotate {
 					  to {
 					    -webkit-transform: rotate(360deg);
 					  }
 					}
-					
+
 					@-moz-keyframes rotate {
 					  to {
 					    transform: rotate(360deg);
 					  }
 					}
-					
+
 					.path {
 					  stroke-dasharray: 170;
 					  stroke-dashoffset: 20;
@@ -131,8 +131,8 @@ class EnrolmentResponse extends AbstractResponse implements RedirectResponseInte
 		     <svg class="spinner-dot dot" width="5px" height="5px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" x="37" y="1.5">
 		       <circle class="path" fill="#42d179" cx="33" cy="33" r="30"/>
 		      </circle>
-		    </svg> 
-		  </svg> 
+		    </svg>
+		  </svg>
 		</section>';
 
 		return $css . $html;

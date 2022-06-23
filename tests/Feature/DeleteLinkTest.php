@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\DeleteLinkRequest;
-use Omnipay\Ipara\Message\DeleteLinkResponse;
-use Omnipay\Ipara\Models\DeleteLinkRequestModel;
-use Omnipay\Ipara\Models\DeleteLinkResponseModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\DeleteLinkRequest;
+use Omnipay\Iyzico\Message\DeleteLinkResponse;
+use Omnipay\Iyzico\Models\DeleteLinkRequestModel;
+use Omnipay\Iyzico\Models\DeleteLinkResponseModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class DeleteLinkTest extends TestCase
 {

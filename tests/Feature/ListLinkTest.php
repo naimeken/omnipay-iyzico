@@ -1,16 +1,16 @@
 <?php
 
-namespace Omnipay\Ipara\Tests\Feature;
+namespace Omnipay\Iyzico\Tests\Feature;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Ipara\Message\ListLinkRequest;
-use Omnipay\Ipara\Message\ListLinkResponse;
-use Omnipay\Ipara\Models\LinkPaymentRecordModel;
-use Omnipay\Ipara\Models\ListLinkRequestModel;
-use Omnipay\Ipara\Models\ListLinkResponseModel;
-use Omnipay\Ipara\Models\CardModel;
-use Omnipay\Ipara\Models\RequestHeadersModel;
-use Omnipay\Ipara\Tests\TestCase;
+use Omnipay\Iyzico\Message\ListLinkRequest;
+use Omnipay\Iyzico\Message\ListLinkResponse;
+use Omnipay\Iyzico\Models\LinkPaymentRecordModel;
+use Omnipay\Iyzico\Models\ListLinkRequestModel;
+use Omnipay\Iyzico\Models\ListLinkResponseModel;
+use Omnipay\Iyzico\Models\CardModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Tests\TestCase;
 
 class ListLinkTest extends TestCase
 {
