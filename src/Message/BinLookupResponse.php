@@ -33,7 +33,7 @@ class BinLookupResponse extends AbstractResponse
 
 				$this->response = new BinLookupResponseModel($data);
 
-				if ((int)$this->response->result === 0) {
+				if (!$this->isSuccessful()) {
 
 					throw new OmnipayIyzicoBinLookupException('Bin lookup failed.');
 
@@ -42,14 +42,14 @@ class BinLookupResponse extends AbstractResponse
 			} catch (JsonException $e) {
 
 				$this->response = new BinLookupResponseModel([
-					"result"       => 0,
+					"status"       => "failure",
 					"errorMessage" => $body,
 				]);
 
 			} catch (OmnipayIyzicoBinLookupException $e) {
 
 				$this->response = new BinLookupResponseModel([
-					"result"       => 0,
+					"status"       => "failure",
 					"errorMessage" => $e->getMessage(),
 				]);
 
@@ -60,12 +60,12 @@ class BinLookupResponse extends AbstractResponse
 
 	public function isSuccessful(): bool
 	{
-		return $this->response->result === 1;
+		return $this->response->status === 'success';
 	}
 
 	public function getMessage(): string
 	{
-		return (string)$this->response->errorMessage;
+		return $this->response->errorMessage;
 	}
 
 	public function getData(): BinLookupResponseModel

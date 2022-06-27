@@ -8,4 +8,4 @@ Date: Fri, 04 Jul 2014 14:09:00 GMT
 Content-Type: application/json
 Content-Length: 415
 
-{"result":0,"errorMessage":"Girmi\u015f oldu\u011funuz tutar bilgisi hatal\u0131d\u0131r. L\u00fctfen tekrar deneyiniz.","errorCode":817,"bankId":null,"bankName":null,"cardFamilyName":null,"supportsInstallment":null,"supportedInstallments":null,"type":null,"serviceProvider":null,"cardThreeDSecureMandatory":null,"merchantThreeDSecureMandatory":null,"cvcMandatory":null,"businessCard":null,"installmentDetail":null}
+{"status":"failure","errorCode":"1000","errorMessage":"Invalid signature","locale":"en","systemTime":1656320944704}

@@ -2,111 +2,107 @@
 
 namespace Omnipay\Iyzico\Helpers;
 
+use Omnipay\Iyzico\Models\InstallmentDetailModel;
+use Omnipay\Iyzico\Models\InstallmentPriceModel;
+
 class Helper
 {
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_cardExpireYear($input, &$var)
-	{
-		$var = substr($input, -2);
-	}
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_gsm($input, &$var)
-	{
-		$var = substr(preg_replace("/(\D+)/", "", $input), -10);
-	}
+    /**
+     * @param $input
+     * @param $var
+     */
+    public static function format_binNumber($input, &$var)
+    {
+        $var = substr($input, 0, 6);
+    }
 
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_binNumber($input, &$var)
-	{
-		$var = substr($input, 0, 6);
-	}
+    /**
+     * @param $input
+     * @param $var
+     */
+    public static function format_price($price, &$var)
+    {
+        if (strpos($price, ".") === false) {
+            $var = $price . ".0";
+        }
+        $subStrIndex   = 0;
+        $priceReversed = strrev($price);
+        for ($i = 0, $iMax = strlen($priceReversed); $i < $iMax; $i++) {
+            if (strcmp($priceReversed[$i], "0") == 0) {
+                $subStrIndex = $i + 1;
+            } else if (strcmp($priceReversed[$i], ".") == 0) {
+                $priceReversed = "0" . $priceReversed;
+                break;
+            } else {
+                break;
+            }
+        }
+        $var = strrev(substr($priceReversed, $subStrIndex));
+    }
 
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_price($input, &$var)
-	{
-		$var = $input * 100;
-	}
+    /**
+     * @param $input
+     * @param $var
+     */
+    public static function format_cardExpireMonth($input, &$var)
+    {
+        $var = str_pad($input, 2, '0', STR_PAD_LEFT);
+    }
 
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_echo($input, &$var)
-	{
-		$var = substr($input, 0, 255);
-	}
+    public function format_commercial($input, &$var)
+    {
+        $var = filter_var($input, FILTER_VALIDATE_BOOL);
+    }
 
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_cardExpireMonth($input, &$var)
-	{
-		$var = str_pad($input, 2, '0', STR_PAD_LEFT);
-	}
+    public function format_forceCvc($input, &$var)
+    {
+        $var = filter_var($input, FILTER_VALIDATE_BOOL);
+    }
 
-	/**
-	 * @param $input
-	 * @param $var
-	 */
-	public static function format_threeD($input, &$var)
-	{
-		$var = $input === false ? "false" : "true";
-	}
+    public function format_force3ds($input, &$var)
+    {
+        $var = filter_var($input, FILTER_VALIDATE_BOOL);
+    }
 
-	public static function hash(?string $public_key, string $hash_string): string
-	{
-		if ($public_key) {
+    public static function hash(?string $publicKey, string $privateKey, array $appends, string $random_string): string
+    {
 
-			$public_key .= ':';
+        $append  = array_map(fn($key) => "$key=$appends[$key]", array_keys($appends));
+        $hashStr = $publicKey . $random_string . $privateKey . "[" . implode(",", $append) . "]";
 
-		}
+        var_dump($hashStr);
 
-		return $public_key . base64_encode(sha1($hash_string, true));
-	}
+        return base64_encode(sha1($hashStr, true));
+    }
 
-	public static function prettyPrint($data)
-	{
-		echo "<pre>" . print_r($data, true) . "</pre>";
-	}
+    public static function prettyPrint($data)
+    {
+        echo "<pre>" . print_r($data, true) . "</pre>";
+    }
 
-	/**
-	 * @param object|array $input
-	 */
-	public static function arrayUnsetRecursive(&$input)
-	{
-		foreach ($input as $key => $value) {
+    public static function format_installmentDetails($input, &$var)
+    {
 
-			if (is_array($value)) {
+        $var = [];
 
-				self::arrayUnsetRecursive($value);
+        foreach ($input as $i) {
 
-			} else if ($value === null) {
+            $var[] = new InstallmentDetailModel($i);
 
-				if (is_object($input)) {
+        }
 
-					unset($input->$key);
+    }
 
-				} else {
+    public static function format_installmentPrices($input, &$var)
+    {
 
-					unset($input[$key]);
+        $var = [];
 
-				}
+        foreach ($input as $i) {
 
-			}
+            $var[] = new InstallmentPriceModel($i);
 
-		}
-	}
+        }
+
+    }
 }

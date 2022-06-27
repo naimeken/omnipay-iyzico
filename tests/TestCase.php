@@ -10,13 +10,15 @@ class TestCase extends GatewayTestCase
 {
 	public $faker;
 
-	public $public_key = "ZZZZZ3333333333";
+	public $public_key = "sandbox-public";
 
-	public $private_key = "ZZZZZ3333333333Z3ZZ3333Z3";
+	public $private_key = "sandbox-private";
 
 	public $order_id = "6128e5cbf324c6128e5cbf3253";
 
-	public $transaction_date = "2021-08-27 16:17:02";
+    public $x_iyzi_rnd = "TEST_RAND";
+
+    public $x_iyzi_client_version = "tcgunel/omnipay-paytr:v0.0.1";
 
 	public function setUp(): void
 	{

@@ -9,88 +9,81 @@ use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class BinLookupRequest extends RemoteAbstractRequest
 {
-	protected $endpoint = 'https://api.ipara.com/rest/payment/bin/lookup/v2';
+    protected $endpoint = '/payment/iyzipos/installment';
 
-	protected $transactionDateTime;
+    /**
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @throws InvalidCreditCardException
+     */
+    public function getData()
+    {
+        $this->validateAll();
 
-	/**
-	 * @throws \Omnipay\Common\Exception\InvalidRequestException
-	 * @throws InvalidCreditCardException
-	 */
-	public function getData()
-	{
-		$this->validateAll();
+        $data = [
+            "request_params" => new BinLookupRequestModel([
+                "binNumber"      => $this->getCard()->getNumber(),
+                "conversationId" => $this->getTransactionId(),
+                "locale"         => $this->getLanguage(),
+                "price"          => $this->getAmount(),
+            ]),
+            "headers"        => null,
+        ];
 
-		date_default_timezone_set('Europe/Istanbul');
+        $data["headers"] =
+            new RequestHeadersModel([
+                "Authorization"         => $this->token($data["request_params"]),
+                "x-iyzi-rnd"            => $this->getRandomString(),
+                "x-iyzi-client-version" => 'tcgunel/omnipay-paytr:v0.0.1',
+            ]);
 
-		$this->transactionDateTime = date("Y-m-d H:i:s");
+        return $data;
+    }
 
-		$data = [
-			"request_params" => new BinLookupRequestModel([
-				"binNumber" => $this->getCard()->getNumber(),
-				"amount"    => $this->getAmountInteger(),
-				"threeD"    => $this->getSecure(),
-			]),
-			"headers"        => null,
-		];
+    /**
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @throws InvalidCreditCardException
+     */
+    protected function validateAll(): void
+    {
+		$this->validate("amount", "transactionId");
 
-		$data["headers"] = new RequestHeadersModel([
-			"transactionDate" => $this->getTransactionDate() ?? $this->transactionDateTime,
-			"version"         => $this->getVersion(),
-			"token"           => $this->token($data["request_params"]),
-		]);
+        if (!is_null($this->getCard()->getNumber()) && !preg_match('/^\d{6,19}$/', $this->getCard()->getNumber())) {
+            throw new InvalidCreditCardException('Card number should have at least 6 to maximum of 19 digits');
+        }
+    }
 
-		return $data;
-	}
+    /**
+     * @param BinLookupRequestModel $request_model
+     *
+     * @return string
+     */
+    protected function token(BinLookupRequestModel $request_model): string
+    {
+        $appends = (array)$request_model;
 
-	/**
-	 * @throws \Omnipay\Common\Exception\InvalidRequestException
-	 * @throws InvalidCreditCardException
-	 */
-	protected function validateAll(): void
-	{
-		$this->validate("amount", "secure");
+        return vsprintf('IYZWS %s:%s', [$this->getPublicKey(), Helper::hash($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString())]);
+    }
 
-		if (!is_null($this->getCard()->getNumber()) && !preg_match('/^\d{8,19}$/', $this->getCard()->getNumber())) {
-			throw new InvalidCreditCardException('Card number should have at least 6 to maximum of 19 digits');
-		}
-	}
+    /**
+     * @throws \JsonException
+     */
+    protected function createResponse($data): BinLookupResponse
+    {
+        return $this->response = new BinLookupResponse($this, $data);
+    }
 
-	/**
-	 * @param BinLookupRequestModel $request_model
-	 *
-	 * @return string
-	 */
-	protected function token(BinLookupRequestModel $request_model): string
-	{
-		$hash_string =
-			$this->getPrivateKey() .
-			$request_model->binNumber .
-			($this->getTransactionDate() ?? $this->transactionDateTime);
+    public function sendData($data)
+    {
+        $httpResponse = $this->httpClient->request(
+            'POST',
+            $this->getEndpoint(),
+            array_merge($data["headers"]->__toArray(), [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json',
+            ]),
+            json_encode($data["request_params"])
+        );
 
-		return Helper::hash($this->getPublicKey(), $hash_string);
-	}
-
-	/**
-	 * @throws \JsonException
-	 */
-	protected function createResponse($data): BinLookupResponse
-	{
-		return $this->response = new BinLookupResponse($this, $data);
-	}
-
-	public function sendData($data)
-	{
-		$httpResponse = $this->httpClient->request(
-			'POST',
-			$this->getEndpoint(),
-			array_merge((array)$data["headers"], [
-				'Content-Type' => 'application/json',
-				'Accept'       => 'application/json',
-			]),
-			json_encode($data["request_params"])
-		);
-
-		return $this->createResponse($httpResponse);
-	}
+        return $this->createResponse($httpResponse);
+    }
 }
