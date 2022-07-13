@@ -3,8 +3,9 @@
   "privateKey": "sandbox-private",
   "testMode": true,
   "randomString": "TEST_RAND",
+  "transactionId": "123456",
   "amount": 1,
   "card": {
-    "number": "5456165456165454"
+    "number": "545616"
   }
 }

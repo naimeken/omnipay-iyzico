@@ -31,6 +31,8 @@ class BinLookupResponse extends AbstractResponse
 
 				$data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 
+                $data['rawResult'] = preg_replace('/\n+/', '', $body);
+
 				$this->response = new BinLookupResponseModel($data);
 
 				if (!$this->isSuccessful()) {

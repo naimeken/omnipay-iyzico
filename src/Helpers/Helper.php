@@ -22,12 +22,18 @@ class Helper
      */
     public static function format_price($price, &$var)
     {
-        if (strpos($price, ".") === false) {
+        $price = number_format($price, 2, '.', '');
+
+        if (!str_contains($price, ".")) {
             $var = $price . ".0";
         }
-        $subStrIndex   = 0;
+
+        $subStrIndex = 0;
+
         $priceReversed = strrev($price);
+
         for ($i = 0, $iMax = strlen($priceReversed); $i < $iMax; $i++) {
+
             if (strcmp($priceReversed[$i], "0") == 0) {
                 $subStrIndex = $i + 1;
             } else if (strcmp($priceReversed[$i], ".") == 0) {
@@ -36,8 +42,11 @@ class Helper
             } else {
                 break;
             }
+
         }
+
         $var = strrev(substr($priceReversed, $subStrIndex));
+
     }
 
     /**
@@ -66,11 +75,8 @@ class Helper
 
     public static function hash(?string $publicKey, string $privateKey, array $appends, string $random_string): string
     {
-
         $append  = array_map(fn($key) => "$key=$appends[$key]", array_keys($appends));
         $hashStr = $publicKey . $random_string . $privateKey . "[" . implode(",", $append) . "]";
-
-        var_dump($hashStr);
 
         return base64_encode(sha1($hashStr, true));
     }

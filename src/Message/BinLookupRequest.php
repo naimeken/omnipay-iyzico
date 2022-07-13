@@ -19,24 +19,21 @@ class BinLookupRequest extends RemoteAbstractRequest
     {
         $this->validateAll();
 
-        $data = [
-            "request_params" => new BinLookupRequestModel([
-                "binNumber"      => $this->getCard()->getNumber(),
-                "conversationId" => $this->getTransactionId(),
-                "locale"         => $this->getLanguage(),
-                "price"          => $this->getAmount(),
-            ]),
-            "headers"        => null,
-        ];
+        $request_params = new BinLookupRequestModel([
+            "binNumber"      => $this->getCard()->getNumber(),
+            "conversationId" => $this->getTransactionId(),
+            "locale"         => $this->getLanguage(),
+            "price"          => $this->getAmount(),
+        ]);
 
-        $data["headers"] =
-            new RequestHeadersModel([
-                "Authorization"         => $this->token($data["request_params"]),
+        return [
+            "request_params" => $request_params,
+            "headers"        => new RequestHeadersModel([
+                "Authorization"         => $this->token($request_params),
                 "x-iyzi-rnd"            => $this->getRandomString(),
-                "x-iyzi-client-version" => 'tcgunel/omnipay-paytr:v0.0.1',
-            ]);
-
-        return $data;
+                "x-iyzi-client-version" => 'tcgunel/omnipay-iyzico:v0.0.1',
+            ]),
+        ];
     }
 
     /**
@@ -45,7 +42,7 @@ class BinLookupRequest extends RemoteAbstractRequest
      */
     protected function validateAll(): void
     {
-		$this->validate("amount", "transactionId");
+        $this->validate("amount", "transactionId");
 
         if (!is_null($this->getCard()->getNumber()) && !preg_match('/^\d{6,19}$/', $this->getCard()->getNumber())) {
             throw new InvalidCreditCardException('Card number should have at least 6 to maximum of 19 digits');

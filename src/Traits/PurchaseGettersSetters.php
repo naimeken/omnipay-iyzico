@@ -57,4 +57,24 @@ trait PurchaseGettersSetters
     {
         return $this->setParameter('randomString', $value);
     }
+
+    public function getClientIp()
+    {
+        return $this->getParameter('clientIp');
+    }
+
+    public function setClientIp($value)
+    {
+        return $this->setParameter('clientIp', $value);
+    }
+
+    public function getInstallment()
+    {
+        return $this->getParameter('installment');
+    }
+
+    public function setInstallment($value)
+    {
+        return $this->setParameter('installment', $value);
+    }
 }

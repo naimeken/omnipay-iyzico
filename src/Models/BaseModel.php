@@ -3,7 +3,6 @@
 namespace Omnipay\Iyzico\Models;
 
 use Omnipay\Iyzico\Helpers\Helper;
-use Omnipay\Iyzico\Helpers\XmlDomConstruct;
 
 class BaseModel
 {
@@ -39,30 +38,5 @@ class BaseModel
             }
 
         }
-    }
-
-    public function asXml($root_tag_name)
-    {
-        if ($root_tag_name) {
-
-            $array = [$root_tag_name => json_decode(json_encode($this), 1)];
-
-        } else {
-
-            $array = json_decode(json_encode($this), 1);
-
-        }
-
-        if (isset($array["auth"]["products"])) {
-
-            $array["auth"]["products"] = ["product" => $array["auth"]["products"]];
-
-        }
-
-        $dom = new XmlDomConstruct('1.0', 'utf-8');
-
-        $dom->fromMixed($array);
-
-        return $dom->saveXML();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Omnipay\Iyzico\Tests\Feature;
 
+use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Iyzico\Message\BinLookupRequest;
 use Omnipay\Iyzico\Message\BinLookupResponse;
 use Omnipay\Iyzico\Models\BinLookupRequestModel;
@@ -30,12 +31,13 @@ class BinLookupTest extends TestCase
 
         $expected = [
             'request_params' => new BinLookupRequestModel([
-                'price'     => "1.0",
-                'binNumber' => '545616',
-                'threeD'    => true,
+                'price'          => "1.0",
+                'binNumber'      => '545616',
+                'conversationId' => '123456',
+                'threeD'         => true,
             ]),
             'headers'        => new RequestHeadersModel([
-                'Authorization'         => "IYZWS sandbox-public:4ldPmeh01sXH51CP7EjG/KCSEgk=",
+                'Authorization'         => "IYZWS sandbox-public:e92bdp3cKAgn3iL7MSGcMhclFqY=",
                 'x_iyzi_rnd'            => $this->x_iyzi_rnd,
                 'x_iyzi_client_version' => $this->x_iyzi_client_version,
             ]),
@@ -59,6 +61,9 @@ class BinLookupTest extends TestCase
         $request->getData();
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function test_bin_lookup_response()
     {
         $httpResponse = $this->getMockHttpResponse('BinLookupResponseSuccess.txt');
@@ -67,9 +72,7 @@ class BinLookupTest extends TestCase
 
         $data = $response->getData();
 
-        $this->assertTrue($response->isSuccessful());
-
-        $this->assertEquals(new BinLookupResponseModel([
+        $expected = [
             'status'             => "success",
             'locale'             => "en",
             'systemTime'         => 1656319733717,
@@ -83,7 +86,7 @@ class BinLookupTest extends TestCase
                     "cardFamilyName"    => "Bonus",
                     "force3ds"          => 0,
                     "bankCode"          => 62,
-                    "bankName"          => "Garanti Bankası",
+                    "bankName"          => "Garanti Bankasi",
                     "forceCvc"          => 0,
                     "commercial"        => 0,
                     "installmentPrices" => [
@@ -120,7 +123,14 @@ class BinLookupTest extends TestCase
                     ]
                 ]
             ],
-        ]), $data);
+        ];
+
+        $expected['rawResult'] = json_encode($expected, JSON_THROW_ON_ERROR);
+
+        $this->assertTrue($response->isSuccessful());
+
+        $this->assertEquals(new BinLookupResponseModel($expected), $data);
+
     }
 
     public function test_charge_response_api_error()
