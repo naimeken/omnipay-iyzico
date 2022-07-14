@@ -2,13 +2,12 @@
 
 namespace Omnipay\Iyzico\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Item;
-use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Iyzico\Helpers\Helper;
 use Omnipay\Iyzico\Models\AddressModel;
-use Omnipay\Iyzico\Models\EnrolmentRequestModel;
-use Omnipay\Iyzico\Models\InvoiceAddressModel;
 use Omnipay\Iyzico\Models\ChargeRequestModel;
+use Omnipay\Iyzico\Models\PaymentCard;
 use Omnipay\Iyzico\Models\ProductModel;
 use Omnipay\Iyzico\Models\PurchaserModel;
 use Omnipay\Iyzico\Models\RequestHeadersModel;
@@ -17,8 +16,6 @@ use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 class PurchaseRequest extends RemoteAbstractRequest
 {
     use PurchaseGettersSetters;
-
-    protected $transactionDateTime;
 
     /**
      * @return array{request_params: array, headers: RequestHeadersModel}
@@ -30,148 +27,148 @@ class PurchaseRequest extends RemoteAbstractRequest
     {
         $this->validateAll();
 
-        date_default_timezone_set('Europe/Istanbul');
+        $request_params = new ChargeRequestModel([
+            "locale"         => $this->getLanguage(),
+            "conversationId" => $this->getTransactionId(),
+            "price"          => array_sum(array_map(static fn (Item $item) => $item->getPrice(), $this->getItems()?->all())),
+            "paidPrice"      => $this->getAmount(),
+            "currency"       => $this->getCurrency(),
+            "installment"    => $this->getInstallment() ?? "1",
+            "basketId"       => $this->getBasketId() ?? $this->getTransactionId(),
+            "paymentChannel" => $this->getPaymentChannel(),
+            "paymentGroup"   => $this->getPaymentGroup(),
 
-        $this->transactionDateTime = date("Y-m-d H:i:s");
+            "paymentCard" => new PaymentCard([
+                "cardNumber"     => $this->get_card("getNumber"),
+                "expireYear"     => $this->get_card("getExpiryYear"),
+                "expireMonth"    => $this->get_card("getExpiryMonth"),
+                "cvc"            => $this->get_card("getCvv"),
+                "cardHolderName" => $this->get_card("getName"),
+                "registerCard"   => $this->getRegisterCard() ?? 0,
+            ]),
 
-        $data = [
-            "request_params" => [
-                "mode"            => $this->getTestMode() ? "T" : "P",
-                "threeD"          => $this->getSecure() ?? "false",
-                "orderId"         => $this->getTransactionId(),
-                "cardOwnerName"   => $this->get_card("getName"),
-                "cardNumber"      => $this->get_card("getNumber"),
-                "cardExpireMonth" => $this->get_card("getExpiryMonth"),
-                "cardExpireYear"  => $this->get_card("getExpiryYear"),
-                "cardCvc"         => $this->get_card("getCvv"),
-                "userId"          => $this->getUserReference() == "" ? null : $this->getUserReference(),
-                "cardId"          => $this->getCardReference(),
-                "installment"     => $this->getInstallment() ?? "1",
-                "amount"          => (string)$this->getAmountInteger(),
-                "echo"            => $this->getEcho(),
-                "vendorId"        => $this->getVendorId(),
-                "language"        => $this->getLanguage() ?? "tr-TR",
+            "buyer" => new PurchaserModel([
 
-                "deviceUUID" => $this->getDeviceUUID(),
-                "successUrl" => $this->getReturnUrl(),
-                "failureUrl" => $this->getCancelUrl(),
+                "id"                  => $this->getUserReference(),
+                "name"                => $this->get_card("getBillingFirstName"),
+                "surname"             => $this->get_card("getBillingLastName"),
+                "identityNumber"      => $this->getNationalId() ?? "11111111111",
+                "city"                => $this->get_card("getShippingCity"),
+                "country"             => $this->get_card("getShippingCountry"),
+                "email"               => $this->get_card("getEmail") ?? "required-dummy@email.com",
+                "gsmNumber"           => implode("", [$this->get_card("getPhoneExtension"), $this->get_card("getPhone")]),
+                "ip"                  => $this->getClientIp() ?? "127.0.0.1",
+                "registrationAddress" => trim(implode(" ", [$this->get_card("getShippingAddress1"), $this->get_card("getShippingAddress2")])),
+                "zipCode"             => $this->get_card("getShippingPostcode"),
+                "registrationDate"    => $this->getRegistrationDate() ?? date('Y-m-d H:i:s'),
+                "lastLoginDate"       => $this->getLastLoginDate() ?? date('Y-m-d H:i:s'),
+            ]),
 
-                "transactionDate" => $this->getTransactionDate() ?? $this->transactionDateTime,
-                "version"         => $this->getVersion() ?? "1.0",
-                "token"           => "",
+            "billingAddress" => new AddressModel([
 
+                "contactName" => $this->get_card("getBillingName"),
+                "city"        => $this->get_card("getBillingCity"),
+                "country"     => $this->get_card("getBillingCountry"),
+                "address"     => trim(implode(" ", [$this->get_card("getBillingAddress1"), $this->get_card("getBillingAddress2")])),
+                "zipCode"     => $this->get_card("getBillingPostcode"),
 
-                "purchaser" => new PurchaserModel([
+            ]),
 
-                    "name"          => $this->get_card("getBillingFirstName"),
-                    "surname"       => $this->get_card("getBillingLastName"),
-                    "email"         => $this->get_card("getEmail") ?? "required-dummy@email.com",
-                    "clientIp"      => $this->getClientIp() ?? "127.0.0.1",
-                    "birthDate"     => $this->get_card("getBirthday") ?? "1950-01-01",
-                    "gsmNumber"     => join("", [$this->get_card("getPhoneExtension"), $this->get_card("getPhone")]),
-                    "tcCertificate" => $this->getNationalId() ?? "11111111111",
+            "shippingAddress" => new AddressModel([
 
-                    "invoiceAddress" => new InvoiceAddressModel([
+                "contactName" => $this->get_card("getShippingName"),
+                "city"        => $this->get_card("getShippingCity"),
+                "country"     => $this->get_card("getShippingCountry"),
+                "address"     => trim(implode(" ", [$this->get_card("getShippingAddress1"), $this->get_card("getShippingAddress2")])),
+                "zipCode"     => $this->get_card("getShippingPostcode"),
 
-                        "name"          => $this->get_card("getBillingFirstName"),
-                        "surname"       => $this->get_card("getBillingLastName"),
-                        "address"       => join(" ", [$this->get_card("getBillingAddress1"), $this->get_card("getBillingAddress2")]),
-                        "zipcode"       => $this->get_card("getBillingPostcode"),
-                        "city"          => $this->get_card("getBillingCity"),
-                        "country"       => $this->get_card("getBillingCountry"),
-                        "phoneNumber"   => join("",
-                            [$this->get_card("getBillingPhoneExtension"), $this->get_card("getBillingPhone")]),
-                        "tcCertificate" => $this->getNationalId(),
-                        "taxNumber"     => $this->getTaxNumber(),
-                        "taxOffice"     => $this->getTaxOffice(),
-                        "companyName"   => $this->get_card("getCompany"),
+            ]),
 
-                    ]),
+            "basketItems" => array_map(function (Item $item) {
+                return new ProductModel([
+                    "id"        => hash("sha1", $item->getName() . $item->getPrice()),
+                    "price"     => $item->getPrice(),
+                    "name"      => $item->getName(),
+                    "category1" => '-',
+                    "category2" => '-',
+                    "itemType"  => 'PHYSICAL',
+                ]);
+            }, $this->getItems()?->all()),
 
-                    "shippingAddress" => new AddressModel([
-
-                        "name"        => $this->get_card("getShippingFirstName"),
-                        "surname"     => $this->get_card("getShippingLastName"),
-                        "address"     => join(" ", [$this->get_card("getShippingAddress1"), $this->get_card("getShippingAddress2")]),
-                        "zipcode"     => $this->get_card("getShippingPostcode"),
-                        "city"        => $this->get_card("getShippingCity"),
-                        "country"     => $this->get_card("getShippingCountry"),
-                        "phoneNumber" => join("",
-                            [$this->get_card("getShippingPhoneExtension"), $this->get_card("getShippingPhone")]),
-
-                    ]),
-                ]),
-
-                "products" => array_map(function (Item $item) {
-                    return new ProductModel([
-                        "productCode" => hash("sha1", $item->getName() . $item->getPrice()),
-                        "productName" => $item->getName(),
-                        "quantity"    => $item->getQuantity(),
-                        "price"       => $item->getPrice(),
-                    ]);
-                }, $this->getItems()->all()),
-            ],
-            "headers"        => null,
-        ];
-
-        $data["headers"] = new RequestHeadersModel([
-            "transactionDate" => $this->getTransactionDate() ?? $this->transactionDateTime,
-            "version"         => $this->getVersion(),
-            "token"           => $this->token($data["request_params"]),
         ]);
 
-        return $data;
+        return [
+            "request_params" => $request_params,
+            "headers"        => new RequestHeadersModel([
+                "Authorization"         => $this->token($request_params),
+                "x-iyzi-rnd"            => $this->getRandomString(),
+                "x-iyzi-client-version" => 'tcgunel/omnipay-iyzico:v0.0.1',
+            ]),
+        ];
     }
 
     protected function validateAll()
     {
-        if ($this->getCardReference() && $this->getUserReference()) {
+        $this->getCard()->validate();
 
-            $this->validate("cardReference", "userReference");
+        $this->validateAdditionalCardFields(
+            'email',
 
-        } else {
+            'billingName',
+            'billingCity',
+            'billingCountry',
+            'billingAddress1',
 
-            $this->getCard()->validate();
-
-        }
+            'shippingName',
+            'shippingCity',
+            'shippingCountry',
+            'shippingAddress1',
+        );
 
         $this->validate(
             "amount",
-            "transactionId",
+            "currency",
             "installment",
+
+            "userReference",
+            "nationalId",
+            "clientIp",
+
+            "items",
+
             "privateKey",
             "publicKey",
-            "items",
         );
     }
 
+    protected function validateAdditionalCardFields(...$args)
+    {
+        $card = $this->getCard();
+
+        foreach ($args as $key) {
+
+            $value = $card->{"get" . ucfirst($key)}();
+
+            if (!isset($value)) {
+
+                throw new InvalidRequestException("The cards $key parameter is required");
+
+            }
+
+        }
+    }
+
     /**
-     * @param EnrolmentRequestModel|ChargeRequestModel $request_model
+     * @param ChargeRequestModel $request_model
      *
      * @return string
+     * @throws \JsonException
      */
     protected function token($request_model): string
     {
-        $request_model = json_decode(json_encode($request_model), true);
+        $appends = json_decode(json_encode($request_model, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
 
-        $hash_string =
-            $this->getPrivateKey() .
-            $request_model["orderId"] .
-            $request_model["amount"] .
-            $request_model["mode"] .
-            $request_model["cardOwnerName"] .
-            $request_model["cardNumber"] .
-            $request_model["cardExpireMonth"] .
-            $request_model["cardExpireYear"] .
-            $request_model["cardCvc"] .
-            $request_model["userId"] .
-            $request_model["cardId"] .
-            $request_model["purchaser"]["name"] .
-            $request_model["purchaser"]["surname"] .
-            $request_model["purchaser"]["email"] .
-            ($this->getTransactionDate() ?? $this->transactionDateTime);
-
-        return Helper::hash($this->getPublicKey(), $hash_string);
+        return vsprintf('IYZWS %s:%s', [$this->getPublicKey(), Helper::hash($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString())]);
     }
 
     protected function createResponse($data)

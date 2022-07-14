@@ -7,241 +7,268 @@ use Omnipay\Iyzico\Message\ChargeRequest;
 use Omnipay\Iyzico\Message\ChargeResponse;
 use Omnipay\Iyzico\Models\AddressModel;
 use Omnipay\Iyzico\Models\ChargeRequestModel;
-use Omnipay\Iyzico\Models\InvoiceAddressModel;
+use Omnipay\Iyzico\Models\ChargeResponseModel;
+use Omnipay\Iyzico\Models\PaymentCard;
 use Omnipay\Iyzico\Models\ProductModel;
 use Omnipay\Iyzico\Models\PurchaserModel;
-use Omnipay\Iyzico\Models\ResponseModel;
+use Omnipay\Iyzico\Models\RequestHeadersModel;
 use Omnipay\Iyzico\Tests\TestCase;
 
 class ChargeTest extends TestCase
 {
-	public function setUp(): void
-	{
-		parent::setUp();
+    public function setUp(): void
+    {
+        parent::setUp();
 
 
-	}
+    }
 
-	public function test_charge_request()
-	{
-		$options = file_get_contents(__DIR__ . "/../Mock/ChargeRequest.json");
+    public function test_charge_request()
+    {
+        $options = file_get_contents(__DIR__ . "/../Mock/ChargeRequest.json");
 
-		$options = json_decode($options, true, 512, JSON_THROW_ON_ERROR);
+        $options = json_decode($options, true, 512, JSON_THROW_ON_ERROR);
 
-		$request = new ChargeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $request = new ChargeRequest($this->getHttpClient(), $this->getHttpRequest());
 
-		$request->initialize($options);
+        $request->initialize($options);
 
-		$data = $request->getData();
+        $data = $request->getData();
 
-		$expected = [
-			'request_params' => new ChargeRequestModel([
-				'threeD'           => false,
-				'threeDSecureCode' => '',
-				'mode'             => 'T',
-				'orderId'          => '6128e5cbf324c6128e5cbf3253',
-				'cardOwnerName'    => 'Example User',
-				'cardNumber'       => '5456165456165454',
-				'cardExpireMonth'  => '12',
-				'cardExpireYear'   => '24',
-				'cardCvc'          => '000',
-				'userId'           => NULL,
-				'cardId'           => NULL,
-				'installment'      => 1,
-				'amount'           => '60000',
-				'echo'             => NULL,
-				'vendorId'         => NULL,
-				'purchaser'        => new PurchaserModel([
-					'name'            => 'Example',
-					'surname'         => 'User',
-					'email'           => 'required-dummy@email.com',
-					'clientIp'        => '127.0.0.1',
-					'birthDate'       => '1950-01-01',
-					'gsmNumber'       => '5554443322',
-					'tcCertificate'   => '11111111111',
-					'invoiceAddress'  => new InvoiceAddressModel([
-						'tcCertificate' => NULL,
-						'taxNumber'     => NULL,
-						'taxOffice'     => NULL,
-						'companyName'   => NULL,
-						'name'          => 'Example',
-						'surname'       => 'User',
-						'address'       => '123 Billing St Billsville',
-						'zipcode'       => '12345',
-						'city'          => 'Billstown',
-						'country'       => 'TR',
-						'phoneNumber'   => '5554443322',
-					]),
-					'shippingAddress' => new AddressModel([
-						'name'        => 'Example',
-						'surname'     => 'User',
-						'address'     => '123 Shipping St Shipsville',
-						'zipcode'     => '54321',
-						'city'        => 'Shipstown',
-						'country'     => 'TR',
-						'phoneNumber' => '5554443322',
-					]),
-				]),
-				'products'         => [
-					new ProductModel([
-						'productCode' => 'c7813278bc7fb6312ce59900eebf2720ca875293',
-						'productName' => 'Perspiciatis et facilis tempore facilis.',
-						'quantity'    => 6,
-						'price'       => 100,
-					]),
-				],
-			]),
-			'headers'        => [
-				'transactionDate' => "2021-08-27 16:17:02",
-				'version'         => '1.0',
-				'token'           => 'ZZZZZ3333333333:+/GdtUUZfdAAu7p/061QaoOsgnA=',
-			],
-		];
+        $expected = [
+            'request_params' => new ChargeRequestModel([
+                "locale"         => 'tr',
+                "conversationId" => '123456789',
+                "price"          => 100,
+                "paidPrice"      => 150,
+                "currency"       => "TRY",
+                "installment"    => 1,
+                "basketId"       => "123456789",
+                "paymentChannel" => "WEB",
+                "paymentGroup"   => "PRODUCT",
 
-		self::assertSame(json_encode($expected), json_encode($data));
-	}
+                "paymentCard" => new PaymentCard([
 
-	public function test_charge_request_saved_card()
-	{
-		$options = file_get_contents(__DIR__ . "/../Mock/ChargeRequest-SavedCard.json");
+                    "cardNumber"     => "5528790000000008",
+                    "expireYear"     => 2030,
+                    "expireMonth"    => 12,
+                    "cvc"            => "123",
+                    "cardHolderName" => "Example User",
+                    "registerCard"   => 0,
+                ]),
 
-		$options = json_decode($options, true, 512, JSON_THROW_ON_ERROR);
+                "buyer" => new PurchaserModel([
 
-		$request = new ChargeRequest($this->getHttpClient(), $this->getHttpRequest());
+                    "id"                  => "1",
+                    "name"                => "Example",
+                    "surname"             => "User",
+                    "identityNumber"      => "11111111111",
+                    "city"                => "Shipstown",
+                    "country"             => "TR",
+                    "email"               => "abc@msn.com",
+                    "gsmNumber"           => "+905554443322",
+                    "ip"                  => "127.0.0.1",
+                    "registrationAddress" => "123 Shipping St Shipsville",
+                    "zipCode"             => "54321",
+                    "registrationDate"    => date('Y-m-d H:i:s'),
+                    "lastLoginDate"       => date('Y-m-d H:i:s'),
+                ]),
 
-		$request->initialize($options);
+                "billingAddress" => new AddressModel([
 
-		$data = $request->getData();
+                    "contactName" => "Example User",
+                    "city"        => "Billstown",
+                    "country"     => "TR",
+                    "address"     => "123 Billing St Billsville",
+                    "zipCode"     => "12345",
 
-		$expected = [
-			'request_params' => new ChargeRequestModel([
-				'threeD'           => false,
-				'threeDSecureCode' => '',
-				'mode'             => 'T',
-				'orderId'          => '6128e5cbf324c6128e5cbf3253',
-				'cardOwnerName'    => 'Example User',
-				'cardNumber'       => null,
-				'cardExpireMonth'  => null,
-				'cardExpireYear'   => null,
-				'cardCvc'          => null,
-				'userId'           => "5KKD0",
-				'cardId'           => "4DCZZ",
-				'installment'      => 1,
-				'amount'           => '60000',
-				'echo'             => NULL,
-				'vendorId'         => NULL,
-				'purchaser'        => new PurchaserModel([
-					'name'            => 'Example',
-					'surname'         => 'User',
-					'email'           => 'required-dummy@email.com',
-					'clientIp'        => '127.0.0.1',
-					'birthDate'       => '1950-01-01',
-					'gsmNumber'       => '5554443322',
-					'tcCertificate'   => '11111111111',
-					'invoiceAddress'  => new InvoiceAddressModel([
-						'tcCertificate' => NULL,
-						'taxNumber'     => NULL,
-						'taxOffice'     => NULL,
-						'companyName'   => NULL,
-						'name'          => 'Example',
-						'surname'       => 'User',
-						'address'       => '123 Billing St Billsville',
-						'zipcode'       => '12345',
-						'city'          => 'Billstown',
-						'country'       => 'TR',
-						'phoneNumber'   => '5554443322',
-					]),
-					'shippingAddress' => new AddressModel([
-						'name'        => 'Example',
-						'surname'     => 'User',
-						'address'     => '123 Shipping St Shipsville',
-						'zipcode'     => '54321',
-						'city'        => 'Shipstown',
-						'country'     => 'TR',
-						'phoneNumber' => '5554443322',
-					]),
-				]),
-				'products'         => [
-					new ProductModel([
-						'productCode' => 'c7813278bc7fb6312ce59900eebf2720ca875293',
-						'productName' => 'Perspiciatis et facilis tempore facilis.',
-						'quantity'    => 6,
-						'price'       => 100,
-					]),
-				],
-			]),
-			'headers'        => [
-				'transactionDate' => "2021-08-27 16:17:02",
-				'version'         => '1.0',
-				'token'           => 'ZZZZZ3333333333:CHWK7bhBYHRzI/74Fy+maWvnZ7M=',
-			],
-		];
+                ]),
 
-		self::assertSame(json_encode($expected), json_encode($data));
-	}
+                "shippingAddress" => new AddressModel([
 
-	public function test_charge_request_validation_error()
-	{
-		$options = file_get_contents(__DIR__ . "/../Mock/ChargeRequest-ValidationError.json");
+                    "contactName" => "Example User",
+                    "city"        => "Shipstown",
+                    "country"     => "TR",
+                    "address"     => "123 Shipping St Shipsville",
+                    "zipcode"     => "54321",
 
-		$options = json_decode($options, true, 512, JSON_THROW_ON_ERROR);
+                ]),
+                'basketItems'     => [
+                    new ProductModel([
+                        'productCode' => 'c7813278bc7fb6312ce59900eebf2720ca875293',
+                        'productName' => 'Perspiciatis et facilis tempore facilis.',
+                        'quantity'    => 6,
+                        'price'       => 100,
+                    ]),
+                ],
+            ]),
+            'headers'        => new RequestHeadersModel([
+                'Authorization'         => "IYZWS sandbox-public:e92bdp3cKAgn3iL7MSGcMhclFqY=",
+                'x_iyzi_rnd'            => $this->x_iyzi_rnd,
+                'x_iyzi_client_version' => $this->x_iyzi_client_version,
+            ]),
+        ];
 
-		$request = new ChargeRequest($this->getHttpClient(), $this->getHttpRequest());
+        self::assertSame(json_encode($expected), json_encode($data));
+    }
 
-		$request->initialize($options);
+    public function test_charge_request_validation_error()
+    {
+        $options = file_get_contents(__DIR__ . "/../Mock/ChargeRequest-ValidationError.json");
 
-		$this->expectException(InvalidCreditCardException::class);
+        $options = json_decode($options, true, 512, JSON_THROW_ON_ERROR);
 
-		$request->getData();
-	}
+        $request = new ChargeRequest($this->getHttpClient(), $this->getHttpRequest());
 
-	public function test_charge_response()
-	{
-		$httpResponse = $this->getMockHttpResponse('ChargeResponseSuccess.txt');
+        $request->initialize($options);
 
-		$this->getMockRequest()->shouldReceive("getParameters")->twice()->andReturn([
-			"publicKey"  => $this->public_key,
-			"privateKey" => $this->private_key
-		]);
+        $this->expectException(InvalidCreditCardException::class);
 
-		/** @var ChargeResponse $response */
-		$response = new ChargeResponse($this->getMockRequest(), $httpResponse);
+        $request->getData();
+    }
 
-		$data = $response->getData();
+    public function test_charge_response()
+    {
+        $httpResponse = $this->getMockHttpResponse('ChargeResponseSuccess.txt');
 
-		$this->assertTrue($response->isSuccessful());
+        $response = new ChargeResponse($this->getMockRequest(), $httpResponse);
 
-		$this->assertEquals(new ResponseModel([
-			"amount"           => "60000",
-			"echo"             => "",
-			"errorCode"        => "",
-			"errorMessage"     => "",
-			"hash"             => "o9pDvOIxsTQBYy8K3e78NdxA6W0=",
-			"mode"             => "T",
-			"orderId"          => "6128e5cbf324c6128e5cbf3253",
-			"publicKey"        => $this->public_key,
-			"result"           => "1",
-			"transactionDate"  => "2021-08-27 16:17:02",
-			"commissionRate"   => null,
-			"threeDSecureCode" => null,
-		]), $data);
-	}
+        $data = $response->getData();
 
-	public function test_charge_response_api_error()
-	{
-		$httpResponse = $this->getMockHttpResponse('ChargeResponseApiError.txt');
+        $this->assertTrue($response->isSuccessful());
 
-		$this->getMockRequest()->shouldReceive("getParameters")->twice()->andReturn([
-			"publicKey"  => $this->public_key,
-			"privateKey" => $this->private_key
-		]);
+        $this->assertEquals(new ChargeResponseModel([
+            'status'                       => "success",
+            'locale'                       => "tr",
+            'systemTime'                   => 1657782727657,
+            'conversationId'               => "123456789",
+            'price'                        => 1,
+            'paidPrice'                    => 1.2,
+            'installment'                  => 1,
+            'paymentId'                    => 18003415,
+            'fraudStatus'                  => 1,
+            'merchantCommissionRate'       => 20,
+            'merchantCommissionRateAmount' => 0.2,
+            'iyziCommissionRateAmount'     => 0.048,
+            'iyziCommissionFee'            => 0.25,
+            'cardType'                     => "CREDIT_CARD",
+            'cardAssociation'              => "MASTER_CARD",
+            'cardFamily'                   => "Paraf",
+            'binNumber'                    => 552879,
+            'lastFourDigits'               => 8,
+            'basketId'                     => "B67832",
+            'currency'                     => "TRY",
+            'itemTransactions'             => [
+                [
+                    'itemId'                        => "5aebc45ee35df4bb145bcc3a42abc4d8ccf2bebf",
+                    'paymentTransactionId'          => 19217173,
+                    'transactionStatus'             => 2,
+                    'price'                         => 0.3,
+                    'paidPrice'                     => 0.36,
+                    'merchantCommissionRate'        => 20,
+                    'merchantCommissionRateAmount'  => 0.06,
+                    'iyziCommissionRateAmount'      => 0.0144,
+                    'iyziCommissionFee'             => 0.075,
+                    'blockageRate'                  => 0,
+                    'blockageRateAmountMerchant'    => 0,
+                    'blockageRateAmountSubMerchant' => 0,
+                    'blockageResolvedDate'          => "2022-07-22 00:00:00",
+                    'subMerchantPrice'              => 0,
+                    'subMerchantPayoutRate'         => 0,
+                    'subMerchantPayoutAmount'       => 0,
+                    'merchantPayoutAmount'          => 0.2706,
+                    'convertedPayout'               => [
+                        'paidPrice'                     => 0.36,
+                        'iyziCommissionRateAmount'      => 0.0144,
+                        'iyziCommissionFee'             => 0.075,
+                        'blockageRateAmountMerchant'    => 0,
+                        'blockageRateAmountSubMerchant' => 0,
+                        'subMerchantPayoutAmount'       => 0,
+                        'merchantPayoutAmount'          => 0.2706,
+                        'iyziConversionRate'            => 0,
+                        'iyziConversionRateAmount'      => 0,
+                        'currency'                      => "TRY"
+                    ],
+                ],
+                [
+                    'itemId'                        => "c84d6f45d08693ca2ad41f5b927da276ebc944d5",
+                    'paymentTransactionId'          => 19217174,
+                    'transactionStatus'             => 2,
+                    'price'                         => 0.5,
+                    'paidPrice'                     => 0.6,
+                    'merchantCommissionRate'        => 20,
+                    'merchantCommissionRateAmount'  => 0.1,
+                    'iyziCommissionRateAmount'      => 0.024,
+                    'iyziCommissionFee'             => 0.125,
+                    'blockageRate'                  => 0,
+                    'blockageRateAmountMerchant'    => 0,
+                    'blockageRateAmountSubMerchant' => 0,
+                    'blockageResolvedDate'          => "2022-07-22 00:00:00",
+                    'subMerchantPrice'              => 0,
+                    'subMerchantPayoutRate'         => 0,
+                    'subMerchantPayoutAmount'       => 0,
+                    'merchantPayoutAmount'          => 0.451,
+                    'convertedPayout'               => [
+                        'paidPrice'                     => 0.6,
+                        'iyziCommissionRateAmount'      => 0.024,
+                        'iyziCommissionFee'             => 0.125,
+                        'blockageRateAmountMerchant'    => 0,
+                        'blockageRateAmountSubMerchant' => 0,
+                        'subMerchantPayoutAmount'       => 0,
+                        'merchantPayoutAmount'          => 0.451,
+                        'iyziConversionRate'            => 0,
+                        'iyziConversionRateAmount'      => 0,
+                        'currency'                      => "TRY"
+                    ],
+                ],
+                [
+                    'itemId'                        => "2ff7c75dd9510387e4751a1289e6020e504e383b",
+                    'paymentTransactionId'          => 19217178,
+                    'transactionStatus'             => 2,
+                    'price'                         => 0.2,
+                    'paidPrice'                     => 0.24,
+                    'merchantCommissionRate'        => 20,
+                    'merchantCommissionRateAmount'  => 0.04,
+                    'iyziCommissionRateAmount'      => 0.0096,
+                    'iyziCommissionFee'             => 0.05,
+                    'blockageRate'                  => 0,
+                    'blockageRateAmountMerchant'    => 0,
+                    'blockageRateAmountSubMerchant' => 0,
+                    'blockageResolvedDate'          => "2022-07-22 00:00:00",
+                    'subMerchantPrice'              => 0,
+                    'subMerchantPayoutRate'         => 0,
+                    'subMerchantPayoutAmount'       => 0,
+                    'merchantPayoutAmount'          => 0.1804,
+                    'convertedPayout'               => [
+                        'paidPrice'                     => 0.24,
+                        'iyziCommissionRateAmount'      => 0.0096,
+                        'iyziCommissionFee'             => 0.05,
+                        'blockageRateAmountMerchant'    => 0,
+                        'blockageRateAmountSubMerchant' => 0,
+                        'subMerchantPayoutAmount'       => 0,
+                        'merchantPayoutAmount'          => 0.1804,
+                        'iyziConversionRate'            => 0,
+                        'iyziConversionRateAmount'      => 0,
+                        'currency'                      => "TRY"
+                    ],
+                ],
+            ],
+            "authCode"                     => 934393,
+            "phase"                        => "AUTH",
+            "hostReference"                => "mock00001iyzihostrfn"
+        ]), $data);
+    }
 
-		$response = new ChargeResponse($this->getMockRequest(), $httpResponse);
+    public function test_charge_response_api_error()
+    {
+        $httpResponse = $this->getMockHttpResponse('ChargeResponseApiError.txt');
 
-		$this->assertFalse($response->isSuccessful());
+        $response = new ChargeResponse($this->getMockRequest(), $httpResponse);
 
-		$this->assertEquals("964", $response->getCode());
+        $this->assertFalse($response->isSuccessful());
 
-		$this->assertEquals("Ödeme işleminizde kullanmış olduğunuz kart güvenlik sebebiyle engellenmiştir.", $response->getMessage());
-	}
+        $this->assertEquals("1000", $response->getCode());
+
+        $this->assertEquals("Geçersiz imza", $response->getMessage());
+    }
 }

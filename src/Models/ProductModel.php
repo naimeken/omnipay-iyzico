@@ -7,11 +7,15 @@ namespace Omnipay\Iyzico\Models;
  */
 class ProductModel extends BaseModel
 {
-    public $productCode;
+    public string $id;
 
-    public $productName;
+    public float $price;
 
-    public $quantity;
+    public string $name;
 
-    public $price;
+    public string $category1;
+
+    public string $category2;
+
+    public string $itemType;
 }

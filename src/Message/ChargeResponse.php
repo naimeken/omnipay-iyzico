@@ -3,7 +3,8 @@
 namespace Omnipay\Iyzico\Message;
 
 use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Iyzico\Models\ResponseModel;
+use Omnipay\Iyzico\Helpers\Helper;
+use Omnipay\Iyzico\Models\ChargeResponseModel;
 
 class ChargeResponse extends RemoteAbstractResponse
 {
@@ -11,17 +12,17 @@ class ChargeResponse extends RemoteAbstractResponse
 	{
 		parent::__construct($request, $data);
 
-		$this->response = new ResponseModel((array)$this->response);
+		$this->response = new ChargeResponseModel((array)$this->response);
 	}
 
-	public function getData(): ResponseModel
+	public function getData(): ChargeResponseModel
 	{
 		return $this->response;
 	}
 
 	public function isSuccessful(): bool
 	{
-		return $this->response->result === "1";
+		return $this->response->status === "success";
 	}
 
 	public function getMessage(): ?string
@@ -31,7 +32,7 @@ class ChargeResponse extends RemoteAbstractResponse
 
 	public function getTransactionId(): ?string
 	{
-		return $this->response->orderId;
+		return $this->response->conversationId;
 	}
 
 	public function getCode(): ?string

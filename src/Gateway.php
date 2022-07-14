@@ -4,6 +4,7 @@ namespace Omnipay\Iyzico;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Iyzico\Message\ChargeRequest;
 use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 
 /**
@@ -41,5 +42,19 @@ class Gateway extends AbstractGateway
     public function binLookup(array $parameters = array()): AbstractRequest
     {
         return $this->createRequest('\Omnipay\Iyzico\Message\BinLookupRequest', $parameters);
+    }
+
+    public function purchase(array $parameters = [])
+    {
+        if (
+            (array_key_exists('secure', $parameters) && $parameters["secure"] === true) ||
+            $this->getSecure() === true
+        ) {
+
+            return $this->createRequest('\Omnipay\Iyzico\Message\EnrolmentRequest', $parameters);
+
+        }
+
+        return $this->createRequest(ChargeRequest::class, $parameters);
     }
 }

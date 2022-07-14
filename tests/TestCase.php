@@ -18,7 +18,7 @@ class TestCase extends GatewayTestCase
 
     public $x_iyzi_rnd = "TEST_RAND";
 
-    public $x_iyzi_client_version = "tcgunel/omnipay-paytr:v0.0.1";
+    public $x_iyzi_client_version = "tcgunel/omnipay-iyzico:v0.0.1";
 
 	public function setUp(): void
 	{

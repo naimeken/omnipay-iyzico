@@ -25,7 +25,23 @@ class BaseModel
 
     private function formatFields()
     {
-        $fields = ["cardExpireMonth", "cardExpireYear", "threeD", "binNumber", "echo", "gsm", "price", 'commercial', 'forceCvc', 'force3ds', 'installmentDetails', 'installmentPrices'];
+        $fields = [
+            "cardExpireMonth",
+            "cardExpireYear",
+            "threeD",
+            "binNumber",
+            "echo",
+            "gsm",
+            "price",
+            "paidPrice",
+            'commercial',
+            'forceCvc',
+            'force3ds',
+            'installmentDetails',
+            'installmentPrices',
+            'itemTransactions',
+            'convertedPayout',
+        ];
 
         foreach ($fields as $field) {
 

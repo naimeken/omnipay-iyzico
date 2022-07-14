@@ -77,4 +77,84 @@ trait PurchaseGettersSetters
     {
         return $this->setParameter('installment', $value);
     }
+
+    public function getBasketId()
+    {
+        return $this->getParameter('basketId');
+    }
+
+    public function setBasketId($value)
+    {
+        return $this->setParameter('basketId', $value);
+    }
+
+    public function getPaymentChannel()
+    {
+        return $this->getParameter('paymentChannel');
+    }
+
+    public function setPaymentChannel($value)
+    {
+        return $this->setParameter('paymentChannel', $value);
+    }
+
+    public function getPaymentGroup()
+    {
+        return $this->getParameter('paymentGroup');
+    }
+
+    public function setPaymentGroup($value)
+    {
+        return $this->setParameter('paymentGroup', $value);
+    }
+
+    public function getRegisterCard()
+    {
+        return $this->getParameter('registerCard');
+    }
+
+    public function setRegisterCard($value)
+    {
+        return $this->setParameter('registerCard', $value);
+    }
+
+    public function getNationalId()
+    {
+        return $this->getParameter('nationalId');
+    }
+
+    public function setNationalId($value)
+    {
+        return $this->setParameter('nationalId', $value);
+    }
+
+    public function getRegistrationDate()
+    {
+        return $this->getParameter('registrationDate');
+    }
+
+    public function setRegistrationDate($value)
+    {
+        return $this->setParameter('registrationDate', $value);
+    }
+
+    public function getLastLoginDate()
+    {
+        return $this->getParameter('lastLoginDate');
+    }
+
+    public function setLastLoginDate($value)
+    {
+        return $this->setParameter('lastLoginDate', $value);
+    }
+
+    public function getUserReference()
+    {
+        return $this->getParameter('userReference');
+    }
+
+    public function setUserReference($value)
+    {
+        return $this->setParameter('userReference', $value);
+    }
 }

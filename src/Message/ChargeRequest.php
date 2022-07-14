@@ -9,7 +9,7 @@ use Omnipay\Iyzico\Models\RequestHeadersModel;
 
 class ChargeRequest extends PurchaseRequest
 {
-    protected $endpoint = "https://api.ipara.com/rest/payment/auth";
+    protected $endpoint = '/payment/auth';
 
     /**
      * @return array{request_params: ChargeRequestModel, headers: RequestHeadersModel}
@@ -20,30 +20,50 @@ class ChargeRequest extends PurchaseRequest
     {
         $data = parent::getData();
 
-        $data["request_params"] = new ChargeRequestModel($data["request_params"]);
+        $data["request_params"] = new ChargeRequestModel((array)$data["request_params"]);
 
         return $data;
     }
 
     protected function validateAll()
     {
-        if ($this->getCardReference() && $this->getUserReference()) {
+        /*if ($this->getCardReference() && $this->getUserReference()) {
 
             $this->validate("cardReference", "userReference");
 
-        } else {
+        } else {*/
 
-            $this->getCard()->validate();
+        $this->getCard()->validate();
 
-        }
+//        }
+
+        $this->validateAdditionalCardFields(
+            'email',
+
+            'billingName',
+            'billingCity',
+            'billingCountry',
+            'billingAddress1',
+
+            'shippingName',
+            'shippingCity',
+            'shippingCountry',
+            'shippingAddress1',
+        );
 
         $this->validate(
             "amount",
-            "transactionId",
+            "currency",
             "installment",
+
+            "userReference",
+            "nationalId",
+            "clientIp",
+
+            "items",
+
             "privateKey",
             "publicKey",
-            "items",
         );
     }
 
@@ -60,17 +80,18 @@ class ChargeRequest extends PurchaseRequest
      *
      * @return ChargeResponse
      * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
+     * @throws \JsonException
      */
     public function sendData($data)
     {
         $httpResponse = $this->httpClient->request(
             'POST',
             $this->getEndpoint(),
-            array_merge((array)$data["headers"], [
-                'Content-Type' => 'application/xml',
-                'Accept'       => 'application/xml',
+            array_merge($data["headers"]->__toArray(), [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json',
             ]),
-            $data["request_params"]->asXml("auth")
+            json_encode($data["request_params"], JSON_THROW_ON_ERROR)
         );
 
         return $this->createResponse($httpResponse);

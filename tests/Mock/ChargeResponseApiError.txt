@@ -1,11 +1,11 @@
-HTTP/1.1 201 Created
+HTTP/1.1 200 Created
 Server: Apache-Coyote/1.1
 PROXY_SERVER_INFO: host=iparatest.com
 SERVER_INFO: iparatest.com
 CORRELATION-ID: 2a1b9202663bc
 Content-Language: *
 Date: Fri, 04 Jul 2014 14:09:00 GMT
-Content-Type: application/xml
-Content-Length: 461
+Content-Type: application/json
+Content-Length: 393
 
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><authResponse><amount>60000</amount><echo></echo><errorCode>964</errorCode><errorMessage>Ödeme işleminizde kullanmış olduğunuz kart güvenlik sebebiyle engellenmiştir.</errorMessage><hash>Bd8Wtzu+Xff/KagLJnd12OlrCoI=</hash><mode>T</mode><orderId>6128e5cbf324c6128e5cbf3253</orderId><publicKey>ZZZZZ3333333333</publicKey><result>0</result><transactionDate>2021-08-27 16:17:02</transactionDate></authResponse>
+{"status":"failure","errorCode":"1000","errorMessage":"Geçersiz imza","locale":"tr","systemTime":1657783639104,"conversationId":"123456789"}

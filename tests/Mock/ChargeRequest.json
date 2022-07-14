@@ -1,42 +1,57 @@
 {
-  "transactionId": "6128e5cbf324c6128e5cbf3253",
-  "publicKey": "ZZZZZ3333333333",
-  "privateKey": "ZZZZZ3333333333Z3ZZ3333Z3",
-  "transactionDate": "2021-08-27 16:17:02",
-  "amount": 600,
-  "installment": 1,
-  "version": "1.0",
-  "testMode": true,
-  "card": {
-    "firstName": "Example",
-    "lastName": "User",
-    "number": "5456165456165454",
-    "expiryMonth": "12",
-    "expiryYear": "2024",
-    "cvv": "000",
-    "billingAddress1": "123 Billing St",
-    "billingAddress2": "Billsville",
-    "billingCity": "Billstown",
-    "billingPostcode": "12345",
-    "billingState": "CA",
-    "billingCountry": "TR",
-    "billingPhone": "5554443322",
-    "shippingAddress1": "123 Shipping St",
-    "shippingAddress2": "Shipsville",
-    "shippingCity": "Shipstown",
-    "shippingPostcode": "54321",
-    "shippingState": "NY",
-    "shippingCountry": "TR",
-    "shippingPhone": "5554443322"
-  },
-  "clientIp": "127.0.0.1",
-  "items": [
-    {
-      "name": "Perspiciatis et facilis tempore facilis.",
-      "description": "My notion was that she was talking. 'How CAN I have done that?' she thought. 'I must be a LITTLE larger, sir, if you like,' said the King and Queen of Hearts, carrying the King's crown on a.",
-      "quantity": 6,
-      "price": 100
-    }
-  ],
-  "secure": false
+    "publicKey": "sandbox-public",
+    "privateKey": "sandbox-private",
+    "randomString": "TEST_RAND",
+    "transactionId": "123456789",
+    "amount": 150,
+    "price": 100,
+    "installment": 1,
+    "testMode": false,
+    "currency": "TRY",
+    "userReference": "1",
+    "nationalId": "11111111111",
+    "language": "tr",
+    "paymentChannel": "WEB",
+    "paymentGroup": "PRODUCT",
+    "card": {
+        "firstName": "Example",
+        "lastName": "User",
+        "number": "5528790000000008",
+        "email": "abc@msn.com",
+        "expiryMonth": "12",
+        "expiryYear": "2030",
+        "cvv": "123",
+        "billingName": "Example User",
+        "billingAddress1": "123 Billing St",
+        "billingAddress2": "Billsville",
+        "billingCity": "Billstown",
+        "billingPostcode": "12345",
+        "billingState": "CA",
+        "billingCountry": "TR",
+        "billingPhone": "+905554443322",
+        "shippingName": "Example User",
+        "shippingAddress1": "123 Shipping St",
+        "shippingAddress2": "Shipsville",
+        "shippingCity": "Shipstown",
+        "shippingPostcode": "54321",
+        "shippingState": "NY",
+        "shippingCountry": "TR",
+        "shippingPhone": "+905554443322"
+    },
+    "clientIp": "127.0.0.1",
+    "items": [
+        {
+            "name": "Perspiciatis et facilis tempore facilis.",
+            "description": "My notion was that she was talking. 'How CAN I have done that?' she thought. 'I must be a LITTLE larger, sir, if you like,' said the King and Queen of Hearts, carrying the King's crown on a.",
+            "quantity": 3,
+            "price": 20
+        },
+        {
+            "name": "Perspiciatis et facilis tempore facilis.",
+            "description": "My notion was that she was talking. 'How CAN I have done that?' she thought. 'I must be a LITTLE larger, sir, if you like,' said the King and Queen of Hearts, carrying the King's crown on a.",
+            "quantity": 1,
+            "price": 40
+        }
+    ],
+    "secure": false
 }
