@@ -39,7 +39,6 @@ class VerifyEnrolmentRequest extends AbstractRequest
         $this->validate(
             "status",
             "paymentId",
-            "conversationData",
             "conversationId",
             "mdStatus",
         );

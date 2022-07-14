@@ -25,8 +25,6 @@ class VerifyEnrolmentResponse extends RemoteAbstractResponse
         parent::__construct($request, $data);
 
         $this->response = $data;
-
-        Helper::prettyPrint($this->response);
     }
 
     public function getData(): VerifyEnrolmentRequestModel

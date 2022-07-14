@@ -61,7 +61,7 @@ class PurchaseRequest extends RemoteAbstractRequest
                 "gsmNumber"           => implode("", [$this->get_card("getPhoneExtension"), $this->get_card("getPhone")]),
                 "ip"                  => $this->getClientIp() ?? "127.0.0.1",
                 "registrationAddress" => trim(implode(" ", [$this->get_card("getShippingAddress1"), $this->get_card("getShippingAddress2")])),
-                "zipCode"             => $this->get_card("getShippingPostcode"),
+                "zipCode"             => $this->get_card("getShippingPostcode") ?? "10000",
                 "registrationDate"    => $this->getRegistrationDate() ?? date('Y-m-d H:i:s'),
                 "lastLoginDate"       => $this->getLastLoginDate() ?? date('Y-m-d H:i:s'),
             ]),
@@ -72,7 +72,7 @@ class PurchaseRequest extends RemoteAbstractRequest
                 "city"        => $this->get_card("getBillingCity"),
                 "country"     => $this->get_card("getBillingCountry"),
                 "address"     => trim(implode(" ", [$this->get_card("getBillingAddress1"), $this->get_card("getBillingAddress2")])),
-                "zipCode"     => $this->get_card("getBillingPostcode"),
+                "zipCode"     => $this->get_card("getBillingPostcode") ?? "10000",
 
             ]),
 
@@ -82,7 +82,7 @@ class PurchaseRequest extends RemoteAbstractRequest
                 "city"        => $this->get_card("getShippingCity"),
                 "country"     => $this->get_card("getShippingCountry"),
                 "address"     => trim(implode(" ", [$this->get_card("getShippingAddress1"), $this->get_card("getShippingAddress2")])),
-                "zipCode"     => $this->get_card("getShippingPostcode"),
+                "zipCode"     => $this->get_card("getShippingPostcode") ?? "10000",
 
             ]),
 

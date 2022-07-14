@@ -24,7 +24,7 @@ class CompletePurchaseRequest extends RemoteAbstractRequest
             "locale"           => $this->getLanguage(),
             "conversationId"   => $this->getTransactionId(),
             "paymentId"        => $this->getPaymentId(),
-            "conversationData" => $this->getConversationData(),
+            "conversationData" => $this->getConversationData() ?? '',
         ]);
 
         return [
@@ -42,7 +42,7 @@ class CompletePurchaseRequest extends RemoteAbstractRequest
      */
     protected function validateAll(): void
     {
-        $this->validate("language", "transactionId", "paymentId", "conversationData");
+        $this->validate("language", "transactionId", "paymentId");
     }
 
     /**

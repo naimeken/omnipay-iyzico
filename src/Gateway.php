@@ -39,6 +39,12 @@ class Gateway extends AbstractGateway
             "language"     => ["tr", "en"],
             "randomString" => str_replace('.', '', uniqid('', true)),
 
+            "paymentChannel" => "WEB",
+            "paymentGroup" => "PHYSICAL",
+
+            "registrationDate" => date('Y-m-d H:i:s'),
+            "lastLoginDate" => date('Y-m-d H:i:s'),
+
         ];
     }
 

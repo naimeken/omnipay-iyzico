@@ -11,7 +11,7 @@ class VerifyEnrolmentRequestModel extends BaseModel
 
     public string $status;
     public string $paymentId;
-    public string $conversationData;
+    public ?string $conversationData;
     public string $conversationId;
     public int $mdStatus;
 }

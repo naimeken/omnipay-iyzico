@@ -93,7 +93,7 @@ class Helper
         $var = str_pad($input, 2, '0', STR_PAD_LEFT);
     }
 
-    public function format_commercial($input, &$var)
+    public static function format_commercial($input, &$var)
     {
         $var = filter_var($input, FILTER_VALIDATE_BOOL);
     }
@@ -120,8 +120,6 @@ class Helper
         $a = str_replace('],[', '], [', $a);
 
         $hashStr = $publicKey . $random_string . $privateKey . $a;
-
-        echo "<div style='width: 2400px'>$hashStr</div>";
 
         return base64_encode(sha1($hashStr, true));
     }
