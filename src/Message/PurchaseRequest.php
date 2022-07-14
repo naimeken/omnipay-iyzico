@@ -7,6 +7,7 @@ use Omnipay\Common\Item;
 use Omnipay\Iyzico\Helpers\Helper;
 use Omnipay\Iyzico\Models\AddressModel;
 use Omnipay\Iyzico\Models\ChargeRequestModel;
+use Omnipay\Iyzico\Models\EnrolmentRequestModel;
 use Omnipay\Iyzico\Models\PaymentCard;
 use Omnipay\Iyzico\Models\ProductModel;
 use Omnipay\Iyzico\Models\PurchaserModel;
@@ -30,13 +31,14 @@ class PurchaseRequest extends RemoteAbstractRequest
         $request_params = new ChargeRequestModel([
             "locale"         => $this->getLanguage(),
             "conversationId" => $this->getTransactionId(),
-            "price"          => array_sum(array_map(static fn (Item $item) => $item->getPrice(), $this->getItems()?->all())),
+            "price"          => array_sum(array_map(static fn(Item $item) => $item->getPrice(), $this->getItems()?->all())),
             "paidPrice"      => $this->getAmount(),
             "currency"       => $this->getCurrency(),
             "installment"    => $this->getInstallment() ?? "1",
             "basketId"       => $this->getBasketId() ?? $this->getTransactionId(),
             "paymentChannel" => $this->getPaymentChannel(),
             "paymentGroup"   => $this->getPaymentGroup(),
+            "callbackUrl"     => $this->getReturnUrl(),
 
             "paymentCard" => new PaymentCard([
                 "cardNumber"     => $this->get_card("getNumber"),
@@ -159,7 +161,7 @@ class PurchaseRequest extends RemoteAbstractRequest
     }
 
     /**
-     * @param ChargeRequestModel $request_model
+     * @param ChargeRequestModel|EnrolmentRequestModel $request_model
      *
      * @return string
      * @throws \JsonException

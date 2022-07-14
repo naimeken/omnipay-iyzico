@@ -41,6 +41,7 @@ class BaseModel
             'installmentPrices',
             'itemTransactions',
             'convertedPayout',
+            'threeDSHtmlContent',
         ];
 
         foreach ($fields as $field) {

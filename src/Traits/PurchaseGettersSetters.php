@@ -157,4 +157,54 @@ trait PurchaseGettersSetters
     {
         return $this->setParameter('userReference', $value);
     }
+
+    public function getStatus()
+    {
+        return $this->getParameter('status');
+    }
+
+    public function setStatus($value)
+    {
+        return $this->setParameter('status', $value);
+    }
+
+    public function getPaymentId()
+    {
+        return $this->getParameter('paymentId');
+    }
+
+    public function setPaymentId($value)
+    {
+        return $this->setParameter('paymentId', $value);
+    }
+
+    public function getConversationData()
+    {
+        return $this->getParameter('conversationData');
+    }
+
+    public function setConversationData($value)
+    {
+        return $this->setParameter('conversationData', $value);
+    }
+
+    public function getConversationId()
+    {
+        return $this->getParameter('conversationId');
+    }
+
+    public function setConversationId($value)
+    {
+        return $this->setParameter('conversationId', $value);
+    }
+
+    public function getMdStatus()
+    {
+        return $this->getParameter('mdStatus');
+    }
+
+    public function setMdStatus($value)
+    {
+        return $this->setParameter('mdStatus', $value);
+    }
 }

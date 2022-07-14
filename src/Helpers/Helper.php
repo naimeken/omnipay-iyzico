@@ -195,4 +195,9 @@ class Helper
     {
         $var = new ConvertedPayoutModel($input);
     }
+
+    public static function format_threeDSHtmlContent($input, &$var)
+    {
+        $var = base64_decode($input);
+    }
 }

@@ -5,7 +5,10 @@ namespace Omnipay\Iyzico;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Iyzico\Message\ChargeRequest;
+use Omnipay\Iyzico\Message\EnrolmentRequest;
+use Omnipay\Iyzico\Message\VerifyEnrolmentRequest;
 use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
+use Omnipay\Iyzico\Message\CompletePurchaseRequest;
 
 /**
  * Iyzico Gateway
@@ -51,10 +54,20 @@ class Gateway extends AbstractGateway
             $this->getSecure() === true
         ) {
 
-            return $this->createRequest('\Omnipay\Iyzico\Message\EnrolmentRequest', $parameters);
+            return $this->createRequest(EnrolmentRequest::class, $parameters);
 
         }
 
         return $this->createRequest(ChargeRequest::class, $parameters);
+    }
+
+    public function verifyEnrolment(array $parameters = array()): AbstractRequest
+    {
+        return $this->createRequest(VerifyEnrolmentRequest::class, $parameters);
+    }
+
+    public function completePurchase(array $parameters = array()): AbstractRequest
+    {
+        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
     }
 }

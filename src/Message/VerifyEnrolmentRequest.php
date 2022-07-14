@@ -2,70 +2,64 @@
 
 namespace Omnipay\Iyzico\Message;
 
-use Omnipay\Common\CreditCard;
-use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Iyzico\Helpers\Helper;
-use Omnipay\Iyzico\Models\ChargeRequestModel;
-use Omnipay\Iyzico\Models\EnrolmentRequestModel;
 use Omnipay\Iyzico\Models\RequestHeadersModel;
-use Omnipay\Iyzico\Models\ResponseModel;
+use Omnipay\Iyzico\Models\VerifyEnrolmentRequestModel;
 use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 
-/**
- * Iyzico Complete Auth Request
- *
- * @deprecated No need to confirm 3d payments with Iyzico.
- */
-class VerifyEnrolmentRequest extends ChargeRequest
+class VerifyEnrolmentRequest extends AbstractRequest
 {
     use PurchaseGettersSetters;
 
     /**
-     * Get the XML registration string to be sent to the gateway
+     * @return array{request_params: array, headers: RequestHeadersModel}
      *
-     * @return array
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @throws \Omnipay\Common\Exception\InvalidCreditCardException
      */
-    public function getData(): array
+    public function getData()
     {
-        /** @var array{request_params: ChargeRequestModel, headers: RequestHeadersModel} $data */
-        $data = parent::getData();
+        $this->validateAll();
 
-        // Post back data.
-        $returnedData = new ResponseModel($this->httpRequest->request->all());
+        $request_params = new VerifyEnrolmentRequestModel([
+            "status"           => $this->getStatus(),
+            "paymentId"        => $this->getPaymentId(),
+            "conversationData" => $this->getConversationData(),
+            "conversationId"   => $this->getConversationId(),
+            "mdStatus"         => $this->getMdStatus(),
+        ]);
 
-        $data["request_params"]->threeDSecureCode = $returnedData->threeDSecureCode;
+        return [
+            "request_params" => $request_params,
+        ];
+    }
 
-        $data["request_params"]->threeD           = true;
-        $data["request_params"]->threeDSecureCode = $returnedData->threeDSecureCode;
-        $data["request_params"]->orderId          = $returnedData->orderId;
-
-        $data["headers"]->token = $this->token($data["request_params"]);
-
-        return $data;
+    protected function validateAll()
+    {
+        $this->validate(
+            "status",
+            "paymentId",
+            "conversationData",
+            "conversationId",
+            "mdStatus",
+        );
     }
 
     /**
-     * @param EnrolmentRequestModel|ChargeRequestModel $request_model
-     *
-     * @return string
+     * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
+     * @throws \JsonException
      */
-    protected function token($request_model): string
+    protected function createResponse($data)
     {
-        $request_model = json_decode(json_encode($request_model), true);
+        return $this->response = new VerifyEnrolmentResponse($this, $data['request_params']);
+    }
 
-        if ( ! isset($request_model["threeDSecureCode"])) {
-            return "";
-        }
-
-        $hash_string =
-            $this->getPrivateKey() .
-            $request_model["orderId"] .
-            $request_model["amount"] .
-            $request_model["mode"] .
-            $request_model["threeDSecureCode"] .
-            ($this->getTransactionDate() ?? $this->transactionDateTime);
-
-        return Helper::hash($this->getPublicKey(), $hash_string);
+    /**
+     * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
+     * @throws \JsonException
+     */
+    public function sendData($data)
+    {
+        return $this->createResponse($data);
     }
 }

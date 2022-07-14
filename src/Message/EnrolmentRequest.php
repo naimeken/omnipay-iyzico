@@ -2,6 +2,7 @@
 
 namespace Omnipay\Iyzico\Message;
 
+use Omnipay\Iyzico\Helpers\Helper;
 use Omnipay\Iyzico\Models\EnrolmentRequestModel;
 use Omnipay\Iyzico\Models\RequestHeadersModel;
 
@@ -10,7 +11,7 @@ use Omnipay\Iyzico\Models\RequestHeadersModel;
  */
 class EnrolmentRequest extends PurchaseRequest
 {
-    protected $endpoint = "https://api.ipara.com/rest/payment/threed";
+    protected $endpoint = "/payment/3dsecure/initialize";
 
     /**
      * Get the XML registration string to be sent to the gateway
@@ -24,11 +25,15 @@ class EnrolmentRequest extends PurchaseRequest
     {
         $data = parent::getData();
 
-        $this->validate("secure", "returnUrl", "cancelUrl");
+        $this->validate("secure", "returnUrl");
+
+        $data["request_params"] = (array)$data["request_params"];
+
+        $data["request_params"]['callbackUrl'] = $this->getReturnUrl();
 
         $data["request_params"] = new EnrolmentRequestModel($data["request_params"]);
 
-        $data["request_params"]->token = $this->token($data["request_params"]);
+        $data["headers"]->Authorization = $this->token($data["request_params"]);
 
         return $data;
     }
@@ -38,11 +43,21 @@ class EnrolmentRequest extends PurchaseRequest
      */
     public function sendData($data)
     {
-        return $this->response = new EnrolmentResponse($this, $data["request_params"]);
+        $httpResponse = $this->httpClient->request(
+            'POST',
+            $this->getEndpoint(),
+            array_merge($data["headers"]->__toArray(), [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json',
+            ]),
+            json_encode($data["request_params"], JSON_THROW_ON_ERROR)
+        );
+
+        return $this->createResponse($httpResponse);
     }
 
     protected function createResponse($data): EnrolmentResponse
     {
-
+        return $this->response = new EnrolmentResponse($this, $data);
     }
 }

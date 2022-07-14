@@ -14,7 +14,7 @@ class RequestHeadersModel extends BaseModel
         ];
     }
 
-    protected $Authorization;
+    public $Authorization;
 
     protected $x_iyzi_rnd;
 

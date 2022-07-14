@@ -32,6 +32,8 @@ abstract class RemoteAbstractResponse extends AbstractResponse
 
 			$body = (string)$data->getBody();
 
+            echo $body;
+
             $this->response = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 
 		}
