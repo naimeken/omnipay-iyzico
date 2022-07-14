@@ -20,27 +20,27 @@ use Omnipay\Iyzico\Message\CompletePurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-	use PurchaseGettersSetters;
+    use PurchaseGettersSetters;
 
-	public function getName(): string
-	{
-		return 'Iyzico';
-	}
+    public function getName(): string
+    {
+        return 'Iyzico';
+    }
 
-	public function getDefaultParameters()
-	{
-		return [
-			"clientIp" => "127.0.0.1",
+    public function getDefaultParameters()
+    {
+        return [
+            "clientIp" => "127.0.0.1",
 
-			"installment"   => "1",
-			"secure"        => false,
-			"publicKey"     => "",
-			"privateKey"    => "",
-			"language"      => ["tr", "en"],
-            "randomString"       => "123456789",
+            "installment"  => "1",
+            "secure"       => false,
+            "publicKey"    => "",
+            "privateKey"   => "",
+            "language"     => ["tr", "en"],
+            "randomString" => str_replace('.', '', uniqid('', true)),
 
-		];
-	}
+        ];
+    }
 
     public function binLookup(array $parameters = array()): AbstractRequest
     {
