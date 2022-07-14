@@ -9,7 +9,7 @@ class ProductModel extends BaseModel
 {
     public string $id;
 
-    public float $price;
+    public $price;
 
     public string $name;
 
