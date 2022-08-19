@@ -98,12 +98,12 @@ class Helper
         $var = filter_var($input, FILTER_VALIDATE_BOOL);
     }
 
-    public function format_forceCvc($input, &$var)
+    public static function format_forceCvc($input, &$var)
     {
         $var = filter_var($input, FILTER_VALIDATE_BOOL);
     }
 
-    public function format_force3ds($input, &$var)
+    public static function format_force3ds($input, &$var)
     {
         $var = filter_var($input, FILTER_VALIDATE_BOOL);
     }
