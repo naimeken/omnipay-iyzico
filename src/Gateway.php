@@ -6,6 +6,7 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Iyzico\Message\ChargeRequest;
 use Omnipay\Iyzico\Message\EnrolmentRequest;
+use Omnipay\Iyzico\Message\PaymentInquiryRequest;
 use Omnipay\Iyzico\Message\VerifyEnrolmentRequest;
 use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 use Omnipay\Iyzico\Message\CompletePurchaseRequest;
@@ -75,5 +76,10 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $parameters = array()): AbstractRequest
     {
         return $this->createRequest(CompletePurchaseRequest::class, $parameters);
+    }
+
+    public function paymentInquiry(array $parameters = array()): AbstractRequest
+    {
+        return $this->createRequest(PaymentInquiryRequest::class, $parameters);
     }
 }
