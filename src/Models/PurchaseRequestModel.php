@@ -31,5 +31,7 @@ class PurchaseRequestModel extends BaseModel
      */
     public $basketItems;
 
+	public string $paymentSource;
+
     public string $currency;
 }

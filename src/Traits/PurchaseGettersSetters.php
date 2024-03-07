@@ -207,4 +207,14 @@ trait PurchaseGettersSetters
     {
         return $this->setParameter('mdStatus', $value);
     }
+
+	public function getPaymentSource()
+	{
+		return $this->getParameter('paymentSource');
+	}
+
+	public function setPaymentSource($value)
+	{
+		return $this->setParameter('paymentSource', $value);
+	}
 }

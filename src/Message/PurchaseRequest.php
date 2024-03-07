@@ -38,6 +38,7 @@ class PurchaseRequest extends RemoteAbstractRequest
             "basketId"       => $this->getBasketId() ?? $this->getTransactionId(),
             "paymentChannel" => $this->getPaymentChannel(),
             "paymentGroup"   => $this->getPaymentGroup(),
+			'paymentSource'  => $this->getPaymentSource() ?? '',
             "callbackUrl"     => $this->getReturnUrl(),
 
             "paymentCard" => new PaymentCard([
