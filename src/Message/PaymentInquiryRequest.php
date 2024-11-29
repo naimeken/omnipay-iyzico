@@ -45,7 +45,9 @@ class PaymentInquiryRequest extends RemoteAbstractRequest
 
     protected function token(array $request_model): string
     {
-        return vsprintf('IYZWS %s:%s', [$this->getPublicKey(), Helper::hash($this->getPublicKey(), $this->getPrivateKey(), $request_model, $this->getRandomString())]);
+        $appends = $request_model;
+
+        return 'IYZWSv2 ' . Helper::hashV2($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString(), $this->endpoint);
     }
 
     /**

@@ -124,6 +124,17 @@ class Helper
         return base64_encode(sha1($hashStr, true));
     }
 
+    public static function hashV2(?string $publicKey, string $privateKey, array $appends, string $random_string, string $uri_path): string
+    {
+        $payload = empty($appends) ? $random_string . $uri_path : $random_string . $uri_path . json_encode($appends, JSON_THROW_ON_ERROR);
+
+        $encypted_data = hash_hmac('sha256', $payload, $privateKey);
+
+        $auth_string = sprintf('apiKey:%s&randomKey:%s&signature:%s', $publicKey, $random_string, $encypted_data);
+
+        return base64_encode($auth_string);
+    }
+
     public static function buildBackets(?string $startKey, array $items, string &$result)
     {
 

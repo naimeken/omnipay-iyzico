@@ -105,7 +105,7 @@ class PurchaseRequest extends RemoteAbstractRequest
             "headers"        => new RequestHeadersModel([
                 "Authorization"         => $this->token($request_params),
                 "x-iyzi-rnd"            => $this->getRandomString(),
-                "x-iyzi-client-version" => 'tcgunel/omnipay-iyzico:v0.0.1',
+                "x-iyzi-client-version" => 'tcgunel/omnipay-iyzico:v1.0.7',
             ]),
         ];
     }
@@ -169,9 +169,9 @@ class PurchaseRequest extends RemoteAbstractRequest
      */
     protected function token($request_model): string
     {
-        $appends = json_decode(json_encode($request_model, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+        $appends = (array)$request_model;
 
-        return vsprintf('IYZWS %s:%s', [$this->getPublicKey(), Helper::hash($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString())]);
+        return 'IYZWSv2 ' . Helper::hashV2($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString(), $this->endpoint);
     }
 
     protected function createResponse($data)

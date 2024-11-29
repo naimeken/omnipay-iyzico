@@ -53,9 +53,9 @@ class CompletePurchaseRequest extends RemoteAbstractRequest
      */
     protected function token($request_model): string
     {
-        $appends = json_decode(json_encode($request_model, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+        $appends = (array)$request_model;
 
-        return vsprintf('IYZWS %s:%s', [$this->getPublicKey(), Helper::hash($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString())]);
+        return 'IYZWSv2 ' . Helper::hashV2($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString(), $this->endpoint);
     }
 
     /**

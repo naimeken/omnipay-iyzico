@@ -58,7 +58,7 @@ class BinLookupRequest extends RemoteAbstractRequest
     {
         $appends = (array)$request_model;
 
-        return vsprintf('IYZWS %s:%s', [$this->getPublicKey(), Helper::hash($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString())]);
+        return 'IYZWSv2 ' . Helper::hashV2($this->getPublicKey(), $this->getPrivateKey(), $appends, $this->getRandomString(), $this->endpoint);
     }
 
     /**
