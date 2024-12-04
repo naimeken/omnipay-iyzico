@@ -7,7 +7,7 @@ use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class PaymentInquiryResponse extends AbstractResponse
+class CheckoutFormInquiryResponse extends AbstractResponse
 {
 	protected $response;
 
@@ -47,7 +47,7 @@ class PaymentInquiryResponse extends AbstractResponse
 
 	public function isSuccessful(): bool
 	{
-		return isset($this->response['paymentStatus']) && $this->response['paymentStatus'] === 'SUCCESS';
+		return $this->response['paymentStatus'] === 'SUCCESS';
 	}
 
 	public function getMessage(): string

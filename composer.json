@@ -41,7 +41,7 @@
         }
     },
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.0",
         "league/omnipay": "^3",
         "ext-json": "*",
         "ext-simplexml": "*",
@@ -51,10 +51,16 @@
         "phpunit/phpunit": "^9",
         "omnipay/tests": "^4",
         "brianium/paratest": "*",
-        "fzaninotto/faker": "*"
+        "fzaninotto/faker": "*",
+        "http-interop/http-factory-guzzle": "^1.2"
     },
     "scripts": {
         "test": "vendor/bin/paratest --processes 6",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

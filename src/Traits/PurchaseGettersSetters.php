@@ -217,4 +217,24 @@ trait PurchaseGettersSetters
 	{
 		return $this->setParameter('paymentSource', $value);
 	}
+
+	public function getIsCheckoutInIframe()
+	{
+		return $this->getParameter('isCheckoutInIframe');
+	}
+
+	public function setIsCheckoutInIframe($value)
+	{
+		return $this->setParameter('isCheckoutInIframe', $value);
+	}
+
+	public function getToken()
+	{
+		return $this->getParameter('token');
+	}
+
+	public function setToken($value)
+	{
+		return $this->setParameter('token', $value);
+	}
 }

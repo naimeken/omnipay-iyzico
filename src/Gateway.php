@@ -5,8 +5,11 @@ namespace Omnipay\Iyzico;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Iyzico\Message\ChargeRequest;
+use Omnipay\Iyzico\Message\CheckoutFormInquiryRequest;
+use Omnipay\Iyzico\Message\CheckoutFormRequest;
 use Omnipay\Iyzico\Message\EnrolmentRequest;
 use Omnipay\Iyzico\Message\PaymentInquiryRequest;
+use Omnipay\Iyzico\Message\PayWithIyzicoRequest;
 use Omnipay\Iyzico\Message\VerifyEnrolmentRequest;
 use Omnipay\Iyzico\Traits\PurchaseGettersSetters;
 use Omnipay\Iyzico\Message\CompletePurchaseRequest;
@@ -39,6 +42,8 @@ class Gateway extends AbstractGateway
             "privateKey"   => "",
             "language"     => ["tr", "en"],
             "randomString" => str_replace('.', '', uniqid('', true)),
+
+            "isCheckoutInIframe" => true,
 
             "paymentChannel" => "WEB",
             "paymentGroup" => "PHYSICAL",
@@ -81,5 +86,20 @@ class Gateway extends AbstractGateway
     public function paymentInquiry(array $parameters = array()): AbstractRequest
     {
         return $this->createRequest(PaymentInquiryRequest::class, $parameters);
+    }
+
+    public function checkoutForm(array $parameters = array()): AbstractRequest|CheckoutFormRequest
+    {
+        return $this->createRequest(CheckoutFormRequest::class, $parameters);
+    }
+
+    public function checkoutFormInquiry(array $parameters = array()): AbstractRequest|CheckoutFormRequest
+    {
+        return $this->createRequest(CheckoutFormInquiryRequest::class, $parameters);
+    }
+
+    public function payWithIyzico(array $parameters = array()): AbstractRequest|CheckoutFormRequest
+    {
+        return $this->createRequest(PayWithIyzicoRequest::class, $parameters);
     }
 }
