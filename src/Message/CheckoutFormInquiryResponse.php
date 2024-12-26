@@ -47,7 +47,7 @@ class CheckoutFormInquiryResponse extends AbstractResponse
 
 	public function isSuccessful(): bool
 	{
-        return isset($this->response['paymentStatus']) && in_array($this->response['paymentStatus'], ['SUCCESS', 'INIT_CREDIT', 'PENDING_CREDIT']);
+        return isset($this->response['paymentStatus']) && in_array($this->response['paymentStatus'], ['SUCCESS', 'INIT_CREDIT', 'PENDING_CREDIT', 'INIT_BANK_TRANSFER']);
 	}
 
 	public function getMessage(): string
