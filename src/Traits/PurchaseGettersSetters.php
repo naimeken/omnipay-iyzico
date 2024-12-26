@@ -237,4 +237,14 @@ trait PurchaseGettersSetters
 	{
 		return $this->setParameter('token', $value);
 	}
+
+	public function getEnabledInstallments()
+	{
+		return $this->getParameter('enabledInstallments');
+	}
+
+	public function setEnabledInstallments($value)
+	{
+		return $this->setParameter('enabledInstallments', $value);
+	}
 }

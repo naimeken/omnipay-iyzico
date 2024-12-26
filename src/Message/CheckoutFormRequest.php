@@ -37,6 +37,7 @@ class CheckoutFormRequest extends RemoteAbstractRequest
             'paymentGroup'   => $this->getPaymentGroup(),
             'paymentSource'  => $this->getPaymentSource() ?? '',
             'callbackUrl'    => $this->getReturnUrl(),
+            'enabledInstallments' => $this->getEnabledInstallments(),
 
             'buyer' => new PurchaserModel([
 
