@@ -2,62 +2,70 @@
 
 namespace Omnipay\Iyzico\Message;
 
+use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Iyzico\Helpers\Helper;
-use Omnipay\Iyzico\Models\EnrolmentRequestModel;
-use Omnipay\Iyzico\Models\RequestHeadersModel;
+use Omnipay\Iyzico\Models\EnrolmentResponseModel;
 
-/**
- * Iyzico 3D Secure enrolment request
- */
-class EnrolmentRequest extends PurchaseRequest
+class EnrolmentResponse extends RemoteAbstractResponse implements RedirectResponseInterface
 {
-    protected $endpoint = "/payment/3dsecure/initialize";
+	public function __construct(RequestInterface $request, $data)
+	{
+		parent::__construct($request, $data);
 
-    /**
-     * Get the XML registration string to be sent to the gateway
-     *
-     * @return array{request_params: array, headers: RequestHeadersModel}
-     *
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
-     * @throws \Omnipay\Common\Exception\InvalidCreditCardException
-     */
-    public function getData()
+		$this->response = new EnrolmentResponseModel((array)$this->response);
+	}
+
+	public function getData(): EnrolmentResponseModel
+	{
+		return $this->response;
+	}
+
+	public function isSuccessful(): bool
+	{
+		return false;
+	}
+
+	public function getMessage(): string
+	{
+		return $this->response->errorMessage;
+	}
+
+	public function isRedirect(): bool
+	{
+		return $this->response->status === 'failure' ? false : true;
+	} 
+
+    public function getRedirectMethod()
     {
-        $data = parent::getData();
-
-        $this->validate("secure", "returnUrl");
-
-        $data["request_params"] = (array)$data["request_params"];
-
-        $data["request_params"]['callbackUrl'] = $this->getReturnUrl();
-
-        $data["request_params"] = new EnrolmentRequestModel($data["request_params"]);
-
-        $data["headers"]->Authorization = $this->token($data["request_params"]);
-
-        return $data;
+        return 'POST';
     }
+	
+	public function getRedirectResponse()
+	{ 
+		$response = parent::getRedirectResponse();
 
-    /**
-     * @throws \Omnipay\Iyzico\Exceptions\OmnipayIyzicoHashValidationException
-     */
-    public function sendData($data)
-    {
-        $httpResponse = $this->httpClient->request(
-            'POST',
-            $this->getEndpoint(),
-            array_merge($data["headers"]->__toArray(), [
-                'Content-Type' => 'application/json',
-                'Accept'       => 'application/json',
-            ]),
-            json_encode($data["request_params"], JSON_THROW_ON_ERROR)
-        );
+		$response->setContent(str_replace('<body', "<body style='color:#FFF'", $this->getData()->threeDSHtmlContent));
 
-        return $this->createResponse($httpResponse);
-    }
+		$script = '<script>
+			document.forms[0].style.display = "none";
+	        document.getElementsByTagName("section")[0].style.display = "block";
 
-    protected function createResponse($data): EnrolmentResponse
-    {
-        return $this->response = new EnrolmentResponse($this, $data);
-    }
+			setTimeout(function() {
+			  document.body.style.color = "auto";
+			  document.forms[0].style.display = "block";
+			  document.getElementsByTagName("section")[0].style.display = "none";
+			}, 5000);
+		</script>';
+
+		$response->setContent(str_replace('</body>', "$script</body>", $response->getContent()));
+ 
+		return $response;
+	}
+
+	public function getRedirectUrl()
+	{
+		return 'IYZICO-Sends-Premade-Form-So-No-Url-Needed';
+	}
 }
